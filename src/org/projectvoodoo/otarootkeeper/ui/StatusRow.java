@@ -3,7 +3,6 @@ package org.projectvoodoo.otarootkeeper.ui;
 
 import org.projectvoodoo.libsu.R.id;
 import org.projectvoodoo.otarootkeeper.R;
-import org.projectvoodoo.otarootkeeper.R.layout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +17,8 @@ public class StatusRow extends TableRow implements OnClickListener {
 
     Context context;
 
+    View mView;
+
     public StatusRow(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -26,25 +27,30 @@ public class StatusRow extends TableRow implements OnClickListener {
 
     public void setAvailable(Boolean availability) {
 
-        View view;
+        if (mView != null)
+            removeView(mView);
+
         if (availability) {
-            view = inflate(context, R.layout.status_available, null);
+            mView = inflate(context, R.layout.status_available, null);
         } else {
-            view = inflate(context, R.layout.status_unavailable, null);
+            mView = inflate(context, R.layout.status_unavailable, null);
 
         }
-        addView(view);
+        addView(mView);
     }
 
     public void setAvailable(Boolean availability, String marketLink) {
-        if (!availability) {
-            View view;
-            view = inflate(context, R.layout.status_unavailable_with_market_link, null);
 
-            Button installButton = (Button) view.findViewById(id.button_install);
+        if (mView != null)
+            removeView(mView);
+
+        if (!availability) {
+            mView = inflate(context, R.layout.status_unavailable_with_market_link, null);
+
+            Button installButton = (Button) mView.findViewById(id.button_install);
             installButton.setOnClickListener(this);
             installButton.setTag(marketLink);
-            addView(view);
+            addView(mView);
         }
     }
 

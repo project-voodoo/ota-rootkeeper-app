@@ -18,7 +18,13 @@
 	<string name="fs_supported">Filesystem supports root protection</string>
 	<string name="su_protected">Protected su copy available</string>
 	<string name="install_market">Market</string>
-
-
+	<string name="protect_root">Protect root</string>
+	<string name="restore_root">Restore root</string>
+	<string name="backup_root">Backup root</string>
+	<string name="toast_su_protected">root su protected</string>
+	<string name="toast_su_backup">root su simple backup completed</string>
+	<string name="toast_su_restore">root su restored</string>
+	<string name="toast_su_delete_backup">root su backup deleted</string>
+	<string name="delete_backup">Delete su backup</string>
 
 </resources>

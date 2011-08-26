@@ -2,7 +2,6 @@
 package org.projectvoodoo.otarootkeeper.backend;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,28 +33,47 @@ public class Utils {
         Log.d(TAG, source + " asset copied to " + destination);
     }
 
-    public static final void runScript(Context context, String content) {
-        runScript(context, content, "/system/bin/sh");
+    public static final String runScript(Context context, String content) {
+        return runScript(context, content, "/system/bin/sh");
     }
 
-    public static final void runScript(Context context, String content, String shell) {
+    public static final String runScript(Context context, String content, String shell) {
+
+        Log.d(TAG, "Run script content (with shell: " + shell + "):\n" + content);
+
+        StringBuilder output = new StringBuilder();
+
         try {
+
+            // write script content
             FileOutputStream fos = context.openFileOutput(scriptFileName, Context.MODE_PRIVATE);
             fos.write(content.getBytes());
             fos.close();
-            Runtime.getRuntime().exec("chmod 700 " + context.getFileStreamPath(scriptFileName));
 
-            // set executable permissions
+            // set script file permission
+            Process p = Runtime.getRuntime().exec(
+                            "chmod 700 " + context.getFileStreamPath(scriptFileName));
+            p.waitFor();
+
+            // now execute the script
             String command = context.getFileStreamPath(scriptFileName).getAbsolutePath();
             command = shell + " -c " + command;
-            Runtime.getRuntime().exec(command);
+            p = Runtime.getRuntime().exec(command);
+            p.waitFor();
 
-            // delete the script file
-            new File(scriptFileName).delete();
+            BufferedReader in =
+                    new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                output.append(line);
+                output.append("\n");
+            }
+
         } catch (Exception e) {
             Log.d(TAG, "unable to run script: " + scriptFileName);
             e.printStackTrace();
         }
+        return output.toString();
     }
 
     public static final Boolean isSuid(Context context, String filename) {
@@ -80,7 +98,8 @@ public class Utils {
 
         StringBuilder output = new StringBuilder();
 
-        InputStream is = Runtime.getRuntime().exec(command).getInputStream();
+        Process p = Runtime.getRuntime().exec(command);
+        InputStream is = p.getInputStream();
         InputStreamReader r = new InputStreamReader(is);
         BufferedReader in = new BufferedReader(r);
 
@@ -91,6 +110,25 @@ public class Utils {
         }
 
         return output.toString();
+    }
+
+    public static final Boolean canGainSu(Context context) {
+
+        String suTestScript = "#!/system/bin/sh\necho ";
+        String suTestScriptValid = "SuPermsOkay";
+
+        String output = runScript(context, suTestScript + suTestScriptValid);
+
+        if (output.trim().equals(suTestScriptValid)) {
+            Log.d(TAG, "Superuser command auth confirmed");
+            return true;
+
+        } else {
+            Log.d(TAG, "Superuser command auth refused");
+            return false;
+
+        }
+
     }
 
 }

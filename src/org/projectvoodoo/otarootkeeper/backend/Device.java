@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
 public class Device {
@@ -16,6 +17,11 @@ public class Device {
 
     Context context;
     public SuOperations suOperations;
+
+    public Boolean isRooted = false;
+    public Boolean isSuperuserAppInstalled = false;
+    public Boolean isSuProtected = false;
+    public Boolean supportedFs = false;
 
     public enum FileSystems {
         EXTFS,
@@ -30,7 +36,9 @@ public class Device {
         ensureAttributeUtilsAvailability();
         detectSystemFs();
 
-        new SuOperations(context, this);
+        analyzeSu();
+
+        suOperations = new SuOperations(context, this);
     }
 
     private void detectSystemFs() {
@@ -96,7 +104,13 @@ public class Device {
         }
     }
 
-    public Boolean isSuProtected() {
+    public void analyzeSu() {
+        isRooted = detectValidSuBinaryInPath();
+        isSuperuserAppInstalled = isSuperUserApkinstalled();
+        isSuProtected = isSuProtected();
+    }
+
+    private Boolean isSuProtected() {
 
         switch (fs) {
             case EXTFS:
@@ -125,7 +139,7 @@ public class Device {
         return false;
     }
 
-    public Boolean detectValidSuBinaryInPath() {
+    private Boolean detectValidSuBinaryInPath() {
         // search for valid su binaries in PATH
 
         String[] pathToTest = System.getenv("PATH").split(":");
@@ -142,4 +156,15 @@ public class Device {
         }
         return false;
     }
+
+    private Boolean isSuperUserApkinstalled() {
+        try {
+            context.getPackageManager().getPackageInfo("com.noshufou.android.su", 0);
+            Log.d(TAG, "Superuser.apk installed");
+            return true;
+        } catch (NameNotFoundException e) {
+            return false;
+        }
+    }
+
 }
