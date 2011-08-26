@@ -88,6 +88,8 @@ public class MainActivity extends Activity {
     }
 
     private void backupProtectedSu() {
+
+        Log.i(TAG, "Backup to protected su");
         ensureAttributeUtilsAvailability();
 
         String script = "";
@@ -97,11 +99,12 @@ public class MainActivity extends Activity {
 
         // de-protect
         if (fs == FileSystems.EXTFS)
-            script += getFilesDir().getAbsolutePath() + "/chattr +i " + protectedSuFullPath + "\n";
+            script += getFilesDir().getAbsolutePath() + "/chattr -i " + protectedSuFullPath + "\n";
 
         if (isSuid("/system/bin/su"))
             suSource = "/system/bin/su";
         script += "cat " + suSource + " > " + protectedSuFullPath + "\n";
+        script += "chmod 06755 " + protectedSuFullPath + "\n";
 
         // protect
         if (fs == FileSystems.EXTFS)
