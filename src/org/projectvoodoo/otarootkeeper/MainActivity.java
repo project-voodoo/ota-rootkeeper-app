@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,21 +19,21 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "Voodoo OTA RootKeeper MainActivity";
     private static final String scriptFileName = "commands.sh";
+    private static final String protectedSuFullPath = "/system/su-protected";
 
     private enum FileSystems {
         EXTFS,
         UNSUPPORTED
     }
 
-    /** Called when the activity is first created. */
+    private FileSystems fs = FileSystems.UNSUPPORTED;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        detectSystemFs();
-
         setContentView(R.layout.main);
 
+        detectSystemFs();
         if (!isSuProtected())
             backupProtectedSu();
     }
@@ -40,17 +41,50 @@ public class MainActivity extends Activity {
     private Boolean isSuProtected() {
         ensureAttributeUtilsAvailability();
 
+        switch (fs) {
+            case EXTFS:
+                try {
+                    String lsattr = getFilesDir().getAbsolutePath() + "/lsattr";
+                    String attrs = getCommandOutput(lsattr + " " + protectedSuFullPath).trim();
+                    Log.d(TAG, "attributes: " + attrs);
+                    if (attrs.matches(".*-i-.*\\/su-protected")) {
+                        Log.i(TAG, "su binary is already protected");
+                        return isSuid(protectedSuFullPath);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            case UNSUPPORTED:
+                return isSuid(protectedSuFullPath);
+
+        }
+
         return false;
+    }
+
+    private Boolean isSuid(String filename) {
+
+        try {
+
+            Process p = Runtime.getRuntime().exec(getFilesDir() + "/test -u " + filename);
+            p.waitFor();
+            if (p.exitValue() == 0) {
+                Log.d(TAG, filename + " is set-user-ID");
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, filename + " is not set-user-ID");
+        return false;
+
     }
 
     private void backupProtectedSu() {
         ensureAttributeUtilsAvailability();
-
-        try {
-            Runtime.getRuntime().exec(
-                    getFilesDir().getAbsolutePath() + "lsattr /system/su-protected");
-        } catch (IOException e) {
-        }
 
     }
 
@@ -92,38 +126,36 @@ public class MainActivity extends Activity {
             Log.d(TAG, "unable to run script: " + scriptFileName);
             e.printStackTrace();
         }
-
     }
 
     private void ensureAttributeUtilsAvailability() {
-        if (detectSystemFs() == FileSystems.EXTFS) {
 
-            // verify custom busybox presence and its lsattr and chattr symlinks
+        // verify custom busybox presence by test, lsattr and chattr
+        // files/symlinks
+        try {
+            openFileInput("test");
+            openFileInput("lsattr");
+            openFileInput("chattr");
+        } catch (FileNotFoundException notfoundE) {
+            Log.d(TAG, "Extracting tools from assets is required");
+
             try {
-                openFileInput("busybox");
-                openFileInput("lsattr");
-                openFileInput("chattr");
-            } catch (FileNotFoundException notfoundE) {
-                Log.d(TAG, "Extracting tools from assets is required");
+                copyFromAssets("busybox", "test");
 
-                try {
-                    copyFromAssets("busybox", "chattr");
+                String filesPath = getFilesDir().getAbsolutePath();
 
-                    String filesPath = getFilesDir().getAbsolutePath();
+                String script = "chmod 700 " + filesPath + "/test\n";
+                script += "ln -s test " + filesPath + "/lsattr\n";
+                script += "ln -s test " + filesPath + "/chattr\n";
+                runScript(script, false);
 
-                    String script = "chmod 700 " + filesPath + "/chattr\n";
-                    script += "ln -s chattr " + filesPath + "/lsattr\n";
-                    runScript(script, false);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-
     }
 
-    private FileSystems detectSystemFs() {
+    private void detectSystemFs() {
 
         // detect an ExtFS filesystem
 
@@ -131,15 +163,20 @@ public class MainActivity extends Activity {
             BufferedReader in = new BufferedReader(new FileReader("/proc/mounts"), 8192);
 
             String line;
-            String fs;
+            String parsedFs;
+
             while ((line = in.readLine()) != null) {
                 if (line.matches(".*system.*")) {
                     Log.i(TAG, "/system mount point: " + line);
-                    fs = line.split(" ")[2];
-                    if (fs.equals("ext2")
-                            || fs.equals("ext3")
-                            || fs.equals("ext4"))
-                        return FileSystems.EXTFS;
+                    parsedFs = line.split(" ")[2].trim();
+
+                    if (parsedFs.equals("ext2")
+                            || parsedFs.equals("ext3")
+                            || parsedFs.equals("ext4")) {
+                        Log.i(TAG, "/system filesystem support extended attributes");
+                        fs = FileSystems.EXTFS;
+                        return;
+                    }
                 }
             }
             in.close();
@@ -148,7 +185,26 @@ public class MainActivity extends Activity {
             Log.e(TAG, "Impossible to parse /proc/mounts");
             e.printStackTrace();
         }
-        return FileSystems.UNSUPPORTED;
 
+        Log.i(TAG, "/system filesystem doesn't support extended attributes");
+        fs = FileSystems.UNSUPPORTED;
+
+    }
+
+    public String getCommandOutput(String command) throws IOException {
+
+        StringBuilder output = new StringBuilder();
+
+        InputStream is = Runtime.getRuntime().exec(command).getInputStream();
+        InputStreamReader r = new InputStreamReader(is);
+        BufferedReader in = new BufferedReader(r);
+
+        String line;
+        while ((line = in.readLine()) != null) {
+            output.append(line);
+            output.append("\n");
+        }
+
+        return output.toString();
     }
 }
