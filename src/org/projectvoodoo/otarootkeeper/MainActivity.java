@@ -36,6 +36,9 @@ public class MainActivity extends Activity {
         detectSystemFs();
         if (!isSuProtected())
             backupProtectedSu();
+
+        if (!detectValidSuBinaryInPath())
+            restoreProtectedSu();
     }
 
     private Boolean isSuProtected() {
@@ -86,6 +89,41 @@ public class MainActivity extends Activity {
     private void backupProtectedSu() {
         ensureAttributeUtilsAvailability();
 
+        String script = "";
+        String suSource = "/system/xbin/su";
+
+        script += "mount -o remount,rw /system /system\n";
+
+        // de-protect
+        if (fs == FileSystems.EXTFS)
+            script += getFilesDir().getAbsolutePath() + "/chattr +i " + protectedSuFullPath + "\n";
+
+        if (isSuid("/system/bin/su"))
+            suSource = "/system/bin/su";
+        script += "cat " + suSource + " > " + protectedSuFullPath + "\n";
+
+        // protect
+        if (fs == FileSystems.EXTFS)
+            script += getFilesDir().getAbsolutePath() + "/chattr +i " + protectedSuFullPath + "\n";
+
+        script += "mount -o remount,ro /system /system\n";
+
+        runScript(script, "su");
+
+    }
+
+    private void restoreProtectedSu() {
+        String script = "";
+
+        script += "mount -o remount,rw /system /system\n";
+
+        script += "cat " + protectedSuFullPath + " > /system/bin/su\n";
+        script += "chmod 06755 /system/bin/su\n";
+        script += "rm /system/xbin/su\n";
+
+        script += "mount -o remount,ro /system /system\n";
+
+        runScript(script, protectedSuFullPath);
     }
 
     private void copyFromAssets(String source, String destination) throws IOException {
@@ -105,7 +143,11 @@ public class MainActivity extends Activity {
         Log.d(TAG, source + " asset copied to " + destination);
     }
 
-    private void runScript(String content, Boolean withSu) {
+    private void runScript(String content) {
+        runScript(content, "/system/bin/sh");
+    }
+
+    private void runScript(String content, String shell) {
         try {
             FileOutputStream fos = openFileOutput(scriptFileName, Context.MODE_PRIVATE);
             fos.write(content.getBytes());
@@ -114,10 +156,7 @@ public class MainActivity extends Activity {
 
             // set executable permissions
             String command = getFileStreamPath(scriptFileName).getAbsolutePath();
-            if (withSu)
-                command = "su -c " + command;
-            else
-                command = "/system/bin/sh -c " + command;
+            command = shell + " -c " + command;
             Runtime.getRuntime().exec(command);
 
             // delete the script file
@@ -147,7 +186,7 @@ public class MainActivity extends Activity {
                 String script = "chmod 700 " + filesPath + "/test\n";
                 script += "ln -s test " + filesPath + "/lsattr\n";
                 script += "ln -s test " + filesPath + "/chattr\n";
-                runScript(script, false);
+                runScript(script);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -206,5 +245,23 @@ public class MainActivity extends Activity {
         }
 
         return output.toString();
+    }
+
+    public Boolean detectValidSuBinaryInPath() {
+        // search for valid su binaries in PATH
+
+        String[] pathToTest = System.getenv("PATH").split(":");
+
+        for (String path : pathToTest) {
+            File suBinary = new File(path + "/su");
+
+            if (suBinary.exists()) {
+                if (isSuid(suBinary.getAbsolutePath())) {
+                    Log.d(TAG, "Found adequate su binary at " + suBinary.getAbsolutePath());
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
