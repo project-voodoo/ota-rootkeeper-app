@@ -2,6 +2,8 @@
 package org.projectvoodoo.otarootkeeper;
 
 import org.projectvoodoo.libsu.R.id;
+import org.projectvoodoo.otarootkeeper.backend.DeviceStatus;
+import org.projectvoodoo.otarootkeeper.backend.SuOperations;
 import org.projectvoodoo.otarootkeeper.ui.StatusRow;
 
 import android.app.Activity;

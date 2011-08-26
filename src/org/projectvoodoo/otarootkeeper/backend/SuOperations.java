@@ -1,7 +1,7 @@
 
-package org.projectvoodoo.otarootkeeper;
+package org.projectvoodoo.otarootkeeper.backend;
 
-import org.projectvoodoo.otarootkeeper.DeviceStatus.FileSystems;
+import org.projectvoodoo.otarootkeeper.backend.DeviceStatus.FileSystems;
 
 import android.content.Context;
 import android.util.Log;

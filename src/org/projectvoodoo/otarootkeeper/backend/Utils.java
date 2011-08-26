@@ -1,5 +1,5 @@
 
-package org.projectvoodoo.otarootkeeper;
+package org.projectvoodoo.otarootkeeper.backend;
 
 import java.io.BufferedReader;
 import java.io.File;
