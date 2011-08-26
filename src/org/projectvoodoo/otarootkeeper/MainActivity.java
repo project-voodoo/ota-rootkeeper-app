@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.projectvoodoo.libsu.R.id;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -32,6 +34,15 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        StatusRow row1 = (StatusRow) findViewById(id.row1);
+        row1.setAvailable(false, "market://details?id=com.noshufou.android.su");
+
+        StatusRow row2 = (StatusRow) findViewById(id.row2);
+        row2.setAvailable(false);
+
+        StatusRow row3 = (StatusRow) findViewById(id.row3);
+        row3.setAvailable(true);
 
         detectSystemFs();
         if (!isSuProtected())

@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, MainActivity!</string>
-    <string name="app_name">Voodoo OTA RootKeeper</string>
+	<string name="app_name">Voodoo OTA RootKeeper</string>
+	<string name="introduction_title">Introduction:</string>
+	<string name="introduction">This app saves a protected copy of \&quot;su\&quot;
+		for devices already rooted.\nIf you loose root permissions after an
+		OTA update, RootKeeper can restore it.</string>
+	<string name="works_with_title">Works with:</string>
+	<string name="works_with">Any device using Ext3 or Ext4 filesystem and Google
+		style incremental OTA update.zip</string>
+	<string name="useless_with_title">Useless with:</string>
+	<string name="useless_with">Samsung phones updated via KIES or Odin and older
+		devices using YAFFS filesystems only</string>
+	<string name="status_title">Status:</string>
+	<string name="superuser_apk_installed">Superuser app installed</string>
+	<string name="device_rooted">Device rooted</string>
+	<string name="permission_granted">Root permission granted</string>
+	<string name="fs_supported">Filesystem supports root protection</string>
+	<string name="su_protected">Protected su copy available</string>
+	<string name="install_market">Market</string>
+
+
+
 </resources>
