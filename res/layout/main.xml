@@ -28,45 +28,45 @@
 		<TableLayout android:layout_width="match_parent"
 			android:id="@+id/tableLayout1" android:layout_height="wrap_content">
 
-			<org.projectvoodoo.otarootkeeper.StatusRow
+			<org.projectvoodoo.otarootkeeper.ui.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row1"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView7"
 					android:layout_height="wrap_content" android:text="@string/superuser_apk_installed"
 					android:layout_width="wrap_content"></TextView>
-			</org.projectvoodoo.otarootkeeper.StatusRow>
+			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 
-			<org.projectvoodoo.otarootkeeper.StatusRow
+			<org.projectvoodoo.otarootkeeper.ui.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row2"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView8"
 					android:layout_height="wrap_content" android:text="@string/device_rooted"
 					android:layout_width="wrap_content"></TextView>
-			</org.projectvoodoo.otarootkeeper.StatusRow>
+			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 
-			<org.projectvoodoo.otarootkeeper.StatusRow
+			<org.projectvoodoo.otarootkeeper.ui.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row3"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView9"
 					android:layout_height="wrap_content" android:text="@string/permission_granted"
 					android:layout_width="wrap_content"></TextView>
-			</org.projectvoodoo.otarootkeeper.StatusRow>
+			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 
-			<org.projectvoodoo.otarootkeeper.StatusRow
+			<org.projectvoodoo.otarootkeeper.ui.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row4"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView10"
 					android:layout_height="wrap_content" android:text="@string/fs_supported"
 					android:layout_width="wrap_content"></TextView>
-			</org.projectvoodoo.otarootkeeper.StatusRow>
+			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 
-			<org.projectvoodoo.otarootkeeper.StatusRow
+			<org.projectvoodoo.otarootkeeper.ui.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row5"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView11"
 					android:layout_height="wrap_content" android:text="@string/su_protected"
 					android:layout_width="wrap_content"></TextView>
-			</org.projectvoodoo.otarootkeeper.StatusRow>
+			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 
 		</TableLayout>
 	</ScrollView>

@@ -2,8 +2,7 @@
 package org.projectvoodoo.otarootkeeper;
 
 import org.projectvoodoo.libsu.R.id;
-import org.projectvoodoo.otarootkeeper.backend.DeviceStatus;
-import org.projectvoodoo.otarootkeeper.backend.SuOperations;
+import org.projectvoodoo.otarootkeeper.backend.Device;
 import org.projectvoodoo.otarootkeeper.ui.StatusRow;
 
 import android.app.Activity;
@@ -13,13 +12,13 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "Voodoo OTA RootKeeper MainActivity";
 
-    DeviceStatus status;
+    Device device;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        status = new DeviceStatus(this);
+        device = new Device(this);
 
         setContentView(R.layout.main);
 
@@ -35,11 +34,11 @@ public class MainActivity extends Activity {
         StatusRow row4 = (StatusRow) findViewById(id.row4);
         row4.setAvailable(true);
 
-        if (!status.isSuProtected())
-            SuOperations.backup(this, status);
+        if (!device.isSuProtected())
+            device.suOperations.backup();
 
-        if (!status.detectValidSuBinaryInPath())
-            SuOperations.restore(this);
+        if (!device.detectValidSuBinaryInPath())
+            device.suOperations.restore();
     }
 
 }

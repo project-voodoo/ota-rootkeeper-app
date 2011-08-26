@@ -7,15 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-
 import android.content.Context;
 import android.util.Log;
 
-public class DeviceStatus {
+public class Device {
 
     private static final String TAG = "Voodoo OTA RootKeeper DeviceStatus";
 
     Context context;
+    public SuOperations suOperations;
 
     public enum FileSystems {
         EXTFS,
@@ -24,11 +24,13 @@ public class DeviceStatus {
 
     public FileSystems fs = FileSystems.UNSUPPORTED;
 
-    public DeviceStatus(Context context) {
+    public Device(Context context) {
         this.context = context;
 
         ensureAttributeUtilsAvailability();
         detectSystemFs();
+
+        new SuOperations(context, this);
     }
 
     private void detectSystemFs() {

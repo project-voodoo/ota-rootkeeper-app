@@ -1,18 +1,25 @@
 
 package org.projectvoodoo.otarootkeeper.backend;
 
-import org.projectvoodoo.otarootkeeper.backend.DeviceStatus.FileSystems;
+import org.projectvoodoo.otarootkeeper.backend.Device.FileSystems;
 
 import android.content.Context;
 import android.util.Log;
 
 public class SuOperations {
 
-    private static final String TAG = "Voodoo OTA RootKeeper ProtectedSuOperation";
+    Context context;
+    Device device;
 
+    private static final String TAG = "Voodoo OTA RootKeeper ProtectedSuOperation";
     public static final String protectedPath = "/system/su-protected";
 
-    public static final void backup(Context context, DeviceStatus status) {
+    public SuOperations(Context context, Device device) {
+        this.context = context;
+        this.device = device;
+    }
+
+    public final void backup() {
 
         Log.i(TAG, "Backup to protected su");
 
@@ -22,7 +29,7 @@ public class SuOperations {
         script += "mount -o remount,rw /system /system\n";
 
         // de-protect
-        if (status.fs == FileSystems.EXTFS)
+        if (device.fs == FileSystems.EXTFS)
             script += context.getFilesDir().getAbsolutePath()
                     + "/chattr -i " + protectedPath + "\n";
 
@@ -32,7 +39,7 @@ public class SuOperations {
         script += "chmod 06755 " + protectedPath + "\n";
 
         // protect
-        if (status.fs == FileSystems.EXTFS)
+        if (device.fs == FileSystems.EXTFS)
             script += context.getFilesDir().getAbsolutePath()
                     + "/chattr +i " + protectedPath + "\n";
 
@@ -42,7 +49,7 @@ public class SuOperations {
 
     }
 
-    public static final void restore(Context context) {
+    public final void restore() {
         String script = "";
 
         script += "mount -o remount,rw /system /system\n";
