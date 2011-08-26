@@ -51,8 +51,10 @@ public class MainActivity extends Activity {
                     String attrs = getCommandOutput(lsattr + " " + protectedSuFullPath).trim();
                     Log.d(TAG, "attributes: " + attrs);
                     if (attrs.matches(".*-i-.*\\/su-protected")) {
-                        Log.i(TAG, "su binary is already protected");
-                        return isSuid(protectedSuFullPath);
+                        if (isSuid(protectedSuFullPath)) {
+                            Log.i(TAG, "su binary is already protected");
+                            return true;
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -64,7 +66,6 @@ public class MainActivity extends Activity {
                 return isSuid(protectedSuFullPath);
 
         }
-
         return false;
     }
 
