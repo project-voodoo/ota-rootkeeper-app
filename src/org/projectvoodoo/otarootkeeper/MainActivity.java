@@ -44,6 +44,9 @@ public class MainActivity extends Activity {
         StatusRow row3 = (StatusRow) findViewById(id.row3);
         row3.setAvailable(true);
 
+        StatusRow row4 = (StatusRow) findViewById(id.row4);
+        row4.setAvailable(true);
+
         detectSystemFs();
         if (!isSuProtected())
             backupProtectedSu();

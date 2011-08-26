@@ -2,25 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
+
 	<TextView android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/introduction" />
+
 	<TextView android:layout_width="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView2"
 		android:layout_height="wrap_content" android:text="@string/works_with_title"></TextView>
 	<TextView android:layout_width="wrap_content" android:id="@+id/textView3"
 		android:layout_height="wrap_content" android:text="@string/works_with"></TextView>
+
 	<TextView android:layout_width="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView4"
 		android:layout_height="wrap_content" android:text="@string/useless_with_title"></TextView>
 	<TextView android:layout_width="wrap_content" android:id="@+id/textView5"
 		android:layout_height="wrap_content" android:text="@string/useless_with"></TextView>
+
 	<TextView android:layout_width="wrap_content"
 		android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/textView6"
 		android:layout_height="wrap_content" android:text="@string/status_title"></TextView>
+
 	<ScrollView android:layout_width="match_parent"
 		android:layout_height="wrap_content" android:id="@+id/scrollView1">
+
 		<TableLayout android:layout_width="match_parent"
 			android:id="@+id/tableLayout1" android:layout_height="wrap_content">
+
 			<org.projectvoodoo.otarootkeeper.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row1"
 				android:layout_height="wrap_content">
@@ -28,46 +35,39 @@
 					android:layout_height="wrap_content" android:text="@string/superuser_apk_installed"
 					android:layout_width="wrap_content"></TextView>
 			</org.projectvoodoo.otarootkeeper.StatusRow>
+
 			<org.projectvoodoo.otarootkeeper.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row2"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView8"
 					android:layout_height="wrap_content" android:text="@string/device_rooted"
 					android:layout_width="wrap_content"></TextView>
-				<LinearLayout android:layout_height="wrap_content"
-					android:id="@+id/linearLayout2" android:orientation="vertical"
-					android:layout_width="wrap_content"></LinearLayout>
 			</org.projectvoodoo.otarootkeeper.StatusRow>
+
 			<org.projectvoodoo.otarootkeeper.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row3"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView9"
 					android:layout_height="wrap_content" android:text="@string/permission_granted"
 					android:layout_width="wrap_content"></TextView>
-				<LinearLayout android:layout_height="wrap_content"
-					android:id="@+id/linearLayout3" android:orientation="vertical"
-					android:layout_width="wrap_content"></LinearLayout>
 			</org.projectvoodoo.otarootkeeper.StatusRow>
+
 			<org.projectvoodoo.otarootkeeper.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row4"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView10"
 					android:layout_height="wrap_content" android:text="@string/fs_supported"
 					android:layout_width="wrap_content"></TextView>
-				<LinearLayout android:layout_height="wrap_content"
-					android:id="@+id/linearLayout4" android:orientation="vertical"
-					android:layout_width="wrap_content"></LinearLayout>
 			</org.projectvoodoo.otarootkeeper.StatusRow>
+
 			<org.projectvoodoo.otarootkeeper.StatusRow
 				android:layout_width="wrap_content" android:id="@+id/row5"
 				android:layout_height="wrap_content">
 				<TextView android:id="@+id/textView11"
 					android:layout_height="wrap_content" android:text="@string/su_protected"
 					android:layout_width="wrap_content"></TextView>
-				<LinearLayout android:layout_height="wrap_content"
-					android:id="@+id/linearLayout5" android:orientation="vertical"
-					android:layout_width="wrap_content"></LinearLayout>
 			</org.projectvoodoo.otarootkeeper.StatusRow>
+
 		</TableLayout>
 	</ScrollView>
 </LinearLayout>
