@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class Device {
 
-    private static final String TAG = "Voodoo OTA RootKeeper DeviceStatus";
+    private static final String TAG = "Voodoo OTA RootKeeper Device";
 
     Context context;
     public SuOperations suOperations;
