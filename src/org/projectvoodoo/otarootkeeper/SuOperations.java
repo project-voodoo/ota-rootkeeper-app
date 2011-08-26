@@ -6,11 +6,11 @@ import org.projectvoodoo.otarootkeeper.DeviceStatus.FileSystems;
 import android.content.Context;
 import android.util.Log;
 
-public class ProtectedSuOperations {
+public class SuOperations {
 
     private static final String TAG = "Voodoo OTA RootKeeper ProtectedSuOperation";
 
-    public static final String path = "/system/su-protected";
+    public static final String protectedPath = "/system/su-protected";
 
     public static final void backup(Context context, DeviceStatus status) {
 
@@ -24,17 +24,17 @@ public class ProtectedSuOperations {
         // de-protect
         if (status.fs == FileSystems.EXTFS)
             script += context.getFilesDir().getAbsolutePath()
-                    + "/chattr -i " + path + "\n";
+                    + "/chattr -i " + protectedPath + "\n";
 
         if (Utils.isSuid(context, "/system/bin/su"))
             suSource = "/system/bin/su";
-        script += "cat " + suSource + " > " + path + "\n";
-        script += "chmod 06755 " + path + "\n";
+        script += "cat " + suSource + " > " + protectedPath + "\n";
+        script += "chmod 06755 " + protectedPath + "\n";
 
         // protect
         if (status.fs == FileSystems.EXTFS)
             script += context.getFilesDir().getAbsolutePath()
-                    + "/chattr +i " + path + "\n";
+                    + "/chattr +i " + protectedPath + "\n";
 
         script += "mount -o remount,ro /system /system\n";
 
@@ -47,12 +47,12 @@ public class ProtectedSuOperations {
 
         script += "mount -o remount,rw /system /system\n";
 
-        script += "cat " + path + " > /system/bin/su\n";
+        script += "cat " + protectedPath + " > /system/bin/su\n";
         script += "chmod 06755 /system/bin/su\n";
         script += "rm /system/xbin/su\n";
 
         script += "mount -o remount,ro /system /system\n";
 
-        Utils.runScript(context, script, path);
+        Utils.runScript(context, script, protectedPath);
     }
 }

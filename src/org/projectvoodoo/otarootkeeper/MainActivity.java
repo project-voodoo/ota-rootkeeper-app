@@ -2,6 +2,7 @@
 package org.projectvoodoo.otarootkeeper;
 
 import org.projectvoodoo.libsu.R.id;
+import org.projectvoodoo.otarootkeeper.ui.StatusRow;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -33,11 +34,10 @@ public class MainActivity extends Activity {
         row4.setAvailable(true);
 
         if (!status.isSuProtected())
-            ProtectedSuOperations.backup(this, status);
+            SuOperations.backup(this, status);
 
         if (!status.detectValidSuBinaryInPath())
-            ProtectedSuOperations.restore(this);
+            SuOperations.restore(this);
     }
-
 
 }

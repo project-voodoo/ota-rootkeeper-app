@@ -25,6 +25,7 @@ public class DeviceStatus {
 
     public DeviceStatus(Context context) {
         this.context = context;
+
         ensureAttributeUtilsAvailability();
         detectSystemFs();
     }
@@ -98,11 +99,12 @@ public class DeviceStatus {
             case EXTFS:
                 try {
                     String lsattr = context.getFilesDir().getAbsolutePath() + "/lsattr";
-                    String attrs = Utils
-                            .getCommandOutput(lsattr + " " + ProtectedSuOperations.path).trim();
+                    String attrs = Utils.getCommandOutput(lsattr + " "
+                            + SuOperations.protectedPath).trim();
                     Log.d(TAG, "attributes: " + attrs);
+
                     if (attrs.matches(".*-i-.*\\/su-protected")) {
-                        if (Utils.isSuid(context, ProtectedSuOperations.path)) {
+                        if (Utils.isSuid(context, SuOperations.protectedPath)) {
                             Log.i(TAG, "su binary is already protected");
                             return true;
                         }
@@ -114,7 +116,7 @@ public class DeviceStatus {
                 break;
 
             case UNSUPPORTED:
-                return Utils.isSuid(context, ProtectedSuOperations.path);
+                return Utils.isSuid(context, SuOperations.protectedPath);
 
         }
         return false;
