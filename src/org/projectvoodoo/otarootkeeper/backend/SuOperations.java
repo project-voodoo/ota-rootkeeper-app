@@ -72,7 +72,8 @@ public class SuOperations {
 
         Utils.runScript(context, script, protectedPath);
 
-        Toast.makeText(context, context.getString(string.toast_su_restore), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, context.getString(string.toast_su_restore), Toast.LENGTH_LONG)
+                .show();
     }
 
     public final void deleteBackup() {
@@ -93,7 +94,26 @@ public class SuOperations {
 
         Utils.runScript(context, script, "su");
 
-        Toast.makeText(context, context.getString(string.toast_su_delete_backup), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, context.getString(string.toast_su_delete_backup),
+                Toast.LENGTH_LONG).show();
+
+    }
+
+    public final void unroot() {
+
+        Log.i(TAG, "Unroot device but keep su backup");
+
+        String script = "";
+
+        script += "mount -o remount,rw /system /system\n";
+
+        // delete su binaries
+        script += "rm /system/*bin/su\n";
+        script += "mount -o remount,ro /system /system\n";
+
+        Utils.runScript(context, script, "su");
+
+        Toast.makeText(context, context.getString(string.toast_unroot), Toast.LENGTH_LONG).show();
 
     }
 }

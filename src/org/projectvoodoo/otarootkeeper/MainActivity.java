@@ -29,6 +29,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private Button backupButton;
     private Button restoreButton;
     private Button deleteBackupButton;
+    private Button unrootButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class MainActivity extends Activity implements OnClickListener {
         restoreButton.setOnClickListener(this);
         deleteBackupButton = (Button) findViewById(id.button_delete_backup);
         deleteBackupButton.setOnClickListener(this);
+        unrootButton = (Button) findViewById(id.button_unroot);
+        unrootButton.setOnClickListener(this);
 
         displayStatus();
     }
@@ -73,6 +76,8 @@ public class MainActivity extends Activity implements OnClickListener {
 
         suProtectedRow.setAvailable(device.isSuProtected);
 
+        unrootButton.setVisibility(View.GONE);
+
         if (device.isRooted && !device.isSuProtected) {
             if (device.fs == FileSystems.EXTFS) {
                 protectButton.setVisibility(View.VISIBLE);
@@ -90,6 +95,7 @@ public class MainActivity extends Activity implements OnClickListener {
             backupButton.setVisibility(View.GONE);
             restoreButton.setVisibility(View.GONE);
             deleteBackupButton.setVisibility(View.VISIBLE);
+            unrootButton.setVisibility(View.VISIBLE);
 
         } else if (!device.isRooted && device.isSuProtected) {
             protectButton.setVisibility(View.GONE);
@@ -115,6 +121,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
         } else if (tag.equals("delete_backup")) {
             device.suOperations.deleteBackup();
+
+        } else if (tag.equals("unroot")) {
+            device.suOperations.unroot();
 
         }
 

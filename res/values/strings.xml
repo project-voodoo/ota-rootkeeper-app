@@ -25,6 +25,8 @@
 	<string name="toast_su_backup">root su simple backup completed</string>
 	<string name="toast_su_restore">root su restored</string>
 	<string name="toast_su_delete_backup">root su backup deleted</string>
+	<string name="toast_unroot">Device un-rooted! (with backup)</string>
 	<string name="delete_backup">Delete su backup</string>
+	<string name="unroot">Unroot (keep backup)</string>
 
 </resources>

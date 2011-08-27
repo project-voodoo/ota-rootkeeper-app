@@ -76,6 +76,9 @@
 			<Button style="@style/action_button" android1:id="@+id/button_delete_backup"
 				android1:text="@string/delete_backup" android1:tag="delete_backup"
 				android1:layout_width="wrap_content" android1:layout_height="wrap_content"></Button>
+			<Button style="@style/action_button" android1:tag="unroot"
+				android1:layout_width="wrap_content" android1:layout_height="wrap_content"
+				android1:text="@string/unroot" android1:id="@+id/button_unroot"></Button>
 		</LinearLayout>
 	</LinearLayout>
 </ScrollView>
