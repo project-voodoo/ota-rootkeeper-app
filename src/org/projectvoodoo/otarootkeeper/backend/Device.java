@@ -117,11 +117,13 @@ public class Device {
                 try {
                     String lsattr = context.getFilesDir().getAbsolutePath() + "/lsattr";
                     String attrs = Utils.getCommandOutput(lsattr + " "
-                            + SuOperations.protectedPath).trim();
+                            + SuOperations.suBackupPath).trim();
                     Log.d(TAG, "attributes: " + attrs);
 
-                    if (attrs.matches(".*-i-.*\\/su-protected")) {
-                        if (Utils.isSuid(context, SuOperations.protectedPath)) {
+                    String filename = SuOperations.suBackupPath.split("/")[2];
+
+                    if (attrs.matches(".*-i-.*\\/" + filename)) {
+                        if (Utils.isSuid(context, SuOperations.suBackupPath)) {
                             Log.i(TAG, "su binary is already protected");
                             return true;
                         }
@@ -133,7 +135,7 @@ public class Device {
                 break;
 
             case UNSUPPORTED:
-                return Utils.isSuid(context, SuOperations.protectedPath);
+                return Utils.isSuid(context, SuOperations.suBackupPath);
 
         }
         return false;

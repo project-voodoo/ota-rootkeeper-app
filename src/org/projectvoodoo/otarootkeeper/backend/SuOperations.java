@@ -14,7 +14,7 @@ public class SuOperations {
     Device device;
 
     private static final String TAG = "Voodoo OTA RootKeeper ProtectedSuOperation";
-    public static final String protectedPath = "/system/su-backup";
+    public static final String suBackupPath = "/system/su-backup";
     public static final String remountRw = "mount -o remount,rw /system /system\n";
     public static final String remountRo = "mount -o remount,ro /system /system\n";
 
@@ -35,18 +35,18 @@ public class SuOperations {
         // de-protect
         if (device.fs == FileSystems.EXTFS)
             script += context.getFilesDir().getAbsolutePath()
-                    + "/chattr -i " + protectedPath + "\n";
+                    + "/chattr -i " + suBackupPath + "\n";
 
         if (Utils.isSuid(context, "/system/bin/su"))
             suSource = "/system/bin/su";
 
-        script += "cat " + suSource + " > " + protectedPath + "\n";
-        script += "chmod 06755 " + protectedPath + "\n";
+        script += "cat " + suSource + " > " + suBackupPath + "\n";
+        script += "chmod 06755 " + suBackupPath + "\n";
 
         // protect
         if (device.fs == FileSystems.EXTFS)
             script += context.getFilesDir().getAbsolutePath()
-                    + "/chattr +i " + protectedPath + "\n";
+                    + "/chattr +i " + suBackupPath + "\n";
 
         script += remountRo;
 
@@ -69,13 +69,13 @@ public class SuOperations {
 
         // restore su binary to /system/bin/su
         // choose bin over xbin to avoid confusion
-        script += "cat " + protectedPath + " > /system/bin/su\n";
+        script += "cat " + suBackupPath + " > /system/bin/su\n";
         script += "chmod 06755 /system/bin/su\n";
         script += "rm /system/xbin/su\n";
 
         script += remountRo;
 
-        Utils.runScript(context, script, protectedPath);
+        Utils.runScript(context, script, suBackupPath);
 
         Toast.makeText(context, context.getString(string.toast_su_restore),
                 Toast.LENGTH_LONG).show();
@@ -91,9 +91,9 @@ public class SuOperations {
         // de-protect
         if (device.fs == FileSystems.EXTFS)
             script += context.getFilesDir().getAbsolutePath()
-                    + "/chattr -i " + protectedPath + "\n";
+                    + "/chattr -i " + suBackupPath + "\n";
 
-        script += "rm " + protectedPath + "\n";
+        script += "rm " + suBackupPath + "\n";
         script += remountRo;
 
         Utils.runScript(context, script, "su");
