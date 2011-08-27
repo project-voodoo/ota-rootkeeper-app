@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="action_button" parent="android:Widget.Button">
+		<item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+	</style>
+	<style name="statusRowStyle">
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:padding">3dp</item>
+	</style>
+</resources>
