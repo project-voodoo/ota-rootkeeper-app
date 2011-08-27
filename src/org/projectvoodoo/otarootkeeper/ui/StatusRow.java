@@ -36,6 +36,7 @@ public class StatusRow extends TableRow implements OnClickListener {
             mView = inflate(context, R.layout.status_unavailable, null);
 
         }
+        setCustomPadding();
         addView(mView);
     }
 
@@ -50,8 +51,13 @@ public class StatusRow extends TableRow implements OnClickListener {
             Button installButton = (Button) mView.findViewById(id.button_install);
             installButton.setOnClickListener(this);
             installButton.setTag(marketLink);
+            setCustomPadding();
             addView(mView);
         }
+    }
+
+    private void setCustomPadding() {
+        mView.setPadding(15, 0, 0, 0);
     }
 
     @Override

@@ -47,6 +47,7 @@ public class MainActivity extends Activity implements OnClickListener {
         protectButton = (Button) findViewById(id.button_protect_root);
         protectButton.setOnClickListener(this);
         backupButton = (Button) findViewById(id.button_backup_root);
+        backupButton.setOnClickListener(this);
         restoreButton = (Button) findViewById(id.button_restore_root);
         restoreButton.setOnClickListener(this);
         deleteBackupButton = (Button) findViewById(id.button_delete_backup);
@@ -72,29 +73,29 @@ public class MainActivity extends Activity implements OnClickListener {
 
         suProtectedRow.setAvailable(device.isSuProtected);
 
-        if (device.isSuProtected)
-            deleteBackupButton.setVisibility(View.VISIBLE);
-        else
-            deleteBackupButton.setVisibility(View.INVISIBLE);
-
-        protectButton.setVisibility(View.INVISIBLE);
-        backupButton.setVisibility(View.INVISIBLE);
-        restoreButton.setVisibility(View.INVISIBLE);
-
         if (device.isRooted && !device.isSuProtected) {
             if (device.fs == FileSystems.EXTFS) {
                 protectButton.setVisibility(View.VISIBLE);
-                backupButton.setVisibility(View.INVISIBLE);
+                backupButton.setVisibility(View.GONE);
+
             } else {
-                protectButton.setVisibility(View.INVISIBLE);
+                protectButton.setVisibility(View.GONE);
                 backupButton.setVisibility(View.VISIBLE);
             }
+            restoreButton.setVisibility(View.GONE);
+            deleteBackupButton.setVisibility(View.GONE);
 
-            restoreButton.setVisibility(View.INVISIBLE);
-        }
+        } else if (device.isRooted && device.isSuProtected) {
+            protectButton.setVisibility(View.GONE);
+            backupButton.setVisibility(View.GONE);
+            restoreButton.setVisibility(View.GONE);
+            deleteBackupButton.setVisibility(View.VISIBLE);
 
-        if (device.isSuProtected && !device.isRooted) {
+        } else if (!device.isRooted && device.isSuProtected) {
+            protectButton.setVisibility(View.GONE);
+            backupButton.setVisibility(View.GONE);
             restoreButton.setVisibility(View.VISIBLE);
+            deleteBackupButton.setVisibility(View.GONE);
         }
 
     }
@@ -108,10 +109,13 @@ public class MainActivity extends Activity implements OnClickListener {
 
         if (tag.equals("protect") || tag.equals("backup")) {
             device.suOperations.backup();
+
         } else if (tag.equals("restore")) {
             device.suOperations.restore();
+
         } else if (tag.equals("delete_backup")) {
             device.suOperations.deleteBackup();
+
         }
 
         device.analyzeSu();
