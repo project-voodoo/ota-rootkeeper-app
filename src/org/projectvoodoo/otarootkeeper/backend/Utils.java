@@ -117,7 +117,9 @@ public class Utils {
         String suTestScript = "#!/system/bin/sh\necho ";
         String suTestScriptValid = "SuPermsOkay";
 
-        String output = runScript(context, suTestScript + suTestScriptValid);
+        String output = runScript(context,
+                suTestScript + suTestScriptValid,
+                "su");
 
         if (output.trim().equals(suTestScriptValid)) {
             Log.d(TAG, "Superuser command auth confirmed");

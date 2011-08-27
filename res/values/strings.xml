@@ -10,7 +10,7 @@
 		style incremental OTA update.zip</string>
 	<string name="useless_with_title">Useless with:</string>
 	<string name="useless_with">Samsung phones updated via KIES or Odin and older
-		devices using YAFFS filesystems only</string>
+		devices using YAFFS filesystems only.</string>
 	<string name="status_title">Status:</string>
 	<string name="superuser_apk_installed">Superuser app installed</string>
 	<string name="device_rooted">Device rooted</string>
