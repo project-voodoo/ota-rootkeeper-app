@@ -1,7 +1,7 @@
 
 package org.projectvoodoo.otarootkeeper;
 
-import org.projectvoodoo.libsu.R.id;
+import org.projectvoodoo.otarootkeeper.R.id;
 import org.projectvoodoo.otarootkeeper.backend.Device;
 import org.projectvoodoo.otarootkeeper.backend.Device.FileSystems;
 import org.projectvoodoo.otarootkeeper.backend.Utils;

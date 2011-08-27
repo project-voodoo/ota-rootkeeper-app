@@ -1,7 +1,7 @@
 
 package org.projectvoodoo.otarootkeeper.ui;
 
-import org.projectvoodoo.libsu.R.id;
+import org.projectvoodoo.otarootkeeper.R.id;
 import org.projectvoodoo.otarootkeeper.R;
 
 import android.content.Context;
