@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG, "OnCreate");
+        Log.i(TAG, "Starting app");
         device = new Device(this);
 
         setContentView(R.layout.main);
