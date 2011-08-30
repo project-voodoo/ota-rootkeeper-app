@@ -27,6 +27,6 @@
 	<string name="toast_su_delete_backup">root su backup deleted</string>
 	<string name="toast_unroot">Device un-rooted! (with backup)</string>
 	<string name="delete_backup">Delete su backup</string>
-	<string name="unroot">Unroot (keep backup)</string>
+	<string name="unroot">Temp. un-root (keeps backup)</string>
 
 </resources>

@@ -1,84 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:orientation="vertical"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:android1="http://schemas.android.com/apk/res/android">
-	<LinearLayout android1:id="@+id/linearLayout2"
-		android1:layout_width="match_parent" android1:layout_height="wrap_content"
-		android1:orientation="vertical">
-		<TextView android1:layout_width="fill_parent" android1:text="@string/introduction"
-			android1:layout_height="wrap_content"></TextView>
-		<TextView android1:textAppearance="?android:attr/textAppearanceLarge"
-			android1:layout_width="wrap_content" android1:text="@string/works_with_title"
-			android1:layout_height="wrap_content" android1:id="@+id/textView2"></TextView>
-		<TextView android1:layout_width="wrap_content" android1:text="@string/works_with"
-			android1:layout_height="wrap_content" android1:id="@+id/textView3"></TextView>
-		<TextView android1:textAppearance="?android:attr/textAppearanceLarge"
-			android1:layout_width="wrap_content" android1:text="@string/useless_with_title"
-			android1:layout_height="wrap_content" android1:id="@+id/textView4"></TextView>
-		<TextView android1:layout_width="wrap_content" android1:text="@string/useless_with"
-			android1:layout_height="wrap_content" android1:id="@+id/textView5"></TextView>
-		<TextView android1:textAppearance="?android:attr/textAppearanceLarge"
-			android1:layout_width="wrap_content" android1:text="@string/status_title"
-			android1:layout_height="wrap_content" android1:id="@+id/textView6"></TextView>
-		<TableLayout android1:id="@+id/tableLayout1"
-			android1:layout_width="fill_parent" android1:layout_height="wrap_content"
-			android1:gravity="center_horizontal">
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<LinearLayout android:id="@+id/linearLayout2"
+		android:layout_width="match_parent" android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<TextView style="@style/infoText" android:layout_width="fill_parent"
+			android:text="@string/introduction" android:layout_height="wrap_content"></TextView>
+		<TextView style="@style/titleText" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content" android:text="@string/works_with_title"
+			android:layout_height="wrap_content" android:id="@+id/textView2"></TextView>
+		<TextView style="@style/infoText" android:layout_width="wrap_content"
+			android:text="@string/works_with" android:layout_height="wrap_content"
+			android:id="@+id/textView3"></TextView>
+		<TextView style="@style/titleText" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content" android:text="@string/useless_with_title"
+			android:layout_height="wrap_content" android:id="@+id/textView4"></TextView>
+		<TextView style="@style/infoText" android:layout_width="wrap_content"
+			android:text="@string/useless_with" android:layout_height="wrap_content"
+			android:id="@+id/textView5"></TextView>
+		<TextView style="@style/titleText" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content" android:text="@string/status_title"
+			android:layout_height="wrap_content" android:id="@+id/textView6"></TextView>
+		<TableLayout android:id="@+id/tableLayout1"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="center_horizontal">
 			<org.projectvoodoo.otarootkeeper.ui.StatusRow
-				style="@style/statusRowStyle" android1:layout_width="wrap_content"
-				android1:id="@+id/superuser_app_installed" android1:layout_height="wrap_content">
-				<TextView android1:layout_height="wrap_content"
-					android1:layout_width="wrap_content" android1:text="@string/superuser_apk_installed"
-					android1:id="@+id/textView7"></TextView>
+				style="@style/statusRowStyle" android:layout_width="wrap_content"
+				android:id="@+id/superuser_app_installed" android:layout_height="wrap_content">
+				<TextView android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:text="@string/superuser_apk_installed"
+					android:id="@+id/textView7"></TextView>
 			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 			<org.projectvoodoo.otarootkeeper.ui.StatusRow
-				style="@style/statusRowStyle" android1:layout_width="wrap_content"
-				android1:id="@+id/rooted" android1:layout_height="wrap_content">
-				<TextView android1:layout_height="wrap_content"
-					android1:layout_width="wrap_content" android1:text="@string/device_rooted"
-					android1:id="@+id/textView8"></TextView>
+				style="@style/statusRowStyle" android:layout_width="wrap_content"
+				android:id="@+id/rooted" android:layout_height="wrap_content">
+				<TextView android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:text="@string/device_rooted"
+					android:id="@+id/textView8"></TextView>
 			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 			<org.projectvoodoo.otarootkeeper.ui.StatusRow
-				style="@style/statusRowStyle" android1:layout_width="wrap_content"
-				android1:id="@+id/root_granted" android1:layout_height="wrap_content">
-				<TextView android1:layout_height="wrap_content"
-					android1:layout_width="wrap_content" android1:text="@string/permission_granted"
-					android1:id="@+id/textView9"></TextView>
+				style="@style/statusRowStyle" android:layout_width="wrap_content"
+				android:id="@+id/root_granted" android:layout_height="wrap_content">
+				<TextView android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:text="@string/permission_granted"
+					android:id="@+id/textView9"></TextView>
 			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 			<org.projectvoodoo.otarootkeeper.ui.StatusRow
-				style="@style/statusRowStyle" android1:layout_width="wrap_content"
-				android1:id="@+id/fs_supported" android1:layout_height="wrap_content">
-				<TextView android1:layout_height="wrap_content"
-					android1:layout_width="wrap_content" android1:text="@string/fs_supported"
-					android1:id="@+id/textView10"></TextView>
+				style="@style/statusRowStyle" android:layout_width="wrap_content"
+				android:id="@+id/fs_supported" android:layout_height="wrap_content">
+				<TextView android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:text="@string/fs_supported"
+					android:id="@+id/textView10"></TextView>
 			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 			<org.projectvoodoo.otarootkeeper.ui.StatusRow
-				style="@style/statusRowStyle" android1:layout_width="wrap_content"
-				android1:id="@+id/su_protected" android1:layout_height="wrap_content">
-				<TextView android1:layout_height="wrap_content"
-					android1:layout_width="wrap_content" android1:text="@string/su_protected"
-					android1:id="@+id/textView11"></TextView>
+				style="@style/statusRowStyle" android:layout_width="wrap_content"
+				android:id="@+id/su_protected" android:layout_height="wrap_content">
+				<TextView android:layout_height="wrap_content"
+					android:layout_width="wrap_content" android:text="@string/su_protected"
+					android:id="@+id/textView11"></TextView>
 			</org.projectvoodoo.otarootkeeper.ui.StatusRow>
 		</TableLayout>
-		<LinearLayout android1:id="@+id/linearLayout1"
-			android1:orientation="vertical" android1:layout_width="fill_parent"
-			android1:layout_height="wrap_content" android1:gravity="center_horizontal|clip_horizontal"
-			android1:layout_marginTop="10dp">
-			<Button style="@style/action_button" android1:id="@+id/button_protect_root"
-				android1:text="@string/protect_root" android1:tag="protect"
-				android1:layout_width="wrap_content" android1:layout_height="wrap_content"></Button>
-			<Button style="@style/action_button" android1:id="@+id/button_backup_root"
-				android1:text="@string/backup_root" android1:tag="backup"
-				android1:layout_width="wrap_content" android1:layout_height="wrap_content"></Button>
-			<Button style="@style/action_button" android1:id="@+id/button_restore_root"
-				android1:text="@string/restore_root" android1:tag="restore"
-				android1:layout_width="wrap_content" android1:layout_height="wrap_content"></Button>
-			<Button style="@style/action_button" android1:id="@+id/button_delete_backup"
-				android1:text="@string/delete_backup" android1:tag="delete_backup"
-				android1:layout_width="wrap_content" android1:layout_height="wrap_content"></Button>
-			<Button style="@style/action_button" android1:tag="unroot"
-				android1:layout_width="wrap_content" android1:layout_height="wrap_content"
-				android1:text="@string/unroot" android1:id="@+id/button_unroot"></Button>
+		<LinearLayout android:id="@+id/linearLayout1"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="center_horizontal|clip_horizontal"
+			android:layout_marginTop="10dp">
+			<Button style="@style/action_button" android:id="@+id/button_protect_root"
+				android:text="@string/protect_root" android:tag="protect"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+			<Button style="@style/action_button" android:id="@+id/button_backup_root"
+				android:text="@string/backup_root" android:tag="backup"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+			<Button style="@style/action_button" android:id="@+id/button_restore_root"
+				android:text="@string/restore_root" android:tag="restore"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+			<Button style="@style/action_button" android:id="@+id/button_delete_backup"
+				android:text="@string/delete_backup" android:tag="delete_backup"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+			<Button style="@style/action_button" android:tag="unroot"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/unroot" android:id="@+id/button_unroot"></Button>
 		</LinearLayout>
 	</LinearLayout>
 </ScrollView>
