@@ -12,7 +12,7 @@ import android.util.Log;
 
 public class Utils {
 
-    private static final String TAG = "Voodoo OTA RootKeeper Utils";
+    private static final String TAG = "Voodoo Utils";
     private static final String scriptFileName = "commands.sh";
 
     public static final void copyFromAssets(Context context, String source, String destination)
