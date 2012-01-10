@@ -98,6 +98,7 @@ public class Utils {
 
         StringBuilder output = new StringBuilder();
 
+        Log.d(TAG, "Getting output for command: " + command);
         Process p = Runtime.getRuntime().exec(command);
         InputStream is = p.getInputStream();
         InputStreamReader r = new InputStreamReader(is);

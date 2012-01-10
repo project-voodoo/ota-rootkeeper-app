@@ -21,7 +21,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     private static final String TAG = "Voodoo OTA RootKeeper MainActivity";
 
-    Device device;
+    private Device device;
 
     private StatusRow superuserdRow;
     private StatusRow rootedRow;

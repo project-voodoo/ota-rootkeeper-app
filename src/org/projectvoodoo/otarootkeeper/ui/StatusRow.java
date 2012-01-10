@@ -15,9 +15,9 @@ import android.widget.TableRow;
 
 public class StatusRow extends TableRow implements OnClickListener {
 
-    Context context;
+    private Context context;
 
-    View mView;
+    private View mView;
 
     public StatusRow(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -30,12 +30,11 @@ public class StatusRow extends TableRow implements OnClickListener {
         if (mView != null)
             removeView(mView);
 
-        if (availability) {
+        if (availability)
             mView = inflate(context, R.layout.status_available, null);
-        } else {
+        else
             mView = inflate(context, R.layout.status_unavailable, null);
 
-        }
         setCustomPadding();
         addView(mView);
     }
