@@ -15,13 +15,12 @@ public class Device {
 
     private static final String TAG = "Voodoo OTA RootKeeper Device";
 
-    Context context;
+    private Context context;
     public SuOperations suOperations;
 
     public Boolean isRooted = false;
     public Boolean isSuperuserAppInstalled = false;
     public Boolean isSuProtected = false;
-    public Boolean supportedFs = false;
 
     public enum FileSystems {
         EXTFS,

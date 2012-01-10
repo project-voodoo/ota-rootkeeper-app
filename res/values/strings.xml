@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Voodoo OTA RootKeeper</string>
-	<string name="introduction_title">Introduction:</string>
-	<string name="introduction">This app saves a protected copy of \&quot;su\&quot;
+
+    <string name="app_name">Voodoo OTA RootKeeper</string>
+    <string name="introduction_title">Introduction:</string>
+    <string name="introduction">This app saves a protected copy of \"su\"
 		for devices already rooted.\nIf you loose root permissions after an
 		OTA update, RootKeeper can restore it.</string>
-	<string name="works_with_title">Works with:</string>
-	<string name="works_with">Any device using Ext3 or Ext4 filesystem and Google
+    <string name="works_with_title">Works with:</string>
+    <string name="works_with">Any device using Ext3 or Ext4 filesystem and Google
 		style incremental OTA update.zip</string>
-	<string name="useless_with_title">Useless with:</string>
-	<string name="useless_with">Samsung phones updated via KIES or Odin and older
+    <string name="useless_with_title">Useless with:</string>
+    <string name="useless_with">Samsung phones updated via KIES or Odin and older
 		devices using YAFFS filesystems only.</string>
-	<string name="status_title">Status:</string>
-	<string name="superuser_apk_installed">Superuser app installed</string>
-	<string name="device_rooted">Device rooted</string>
-	<string name="permission_granted">Root permission granted</string>
-	<string name="fs_supported">Filesystem supports root protection</string>
-	<string name="su_protected">Protected su copy available</string>
-	<string name="install_market">Market</string>
-	<string name="protect_root">Protect root</string>
-	<string name="restore_root">Restore root</string>
-	<string name="backup_root">Backup root</string>
-	<string name="toast_su_protected">root su protected</string>
-	<string name="toast_su_backup">root su simple backup completed</string>
-	<string name="toast_su_restore">root su restored</string>
-	<string name="toast_su_delete_backup">root su backup deleted</string>
-	<string name="toast_unroot">Device un-rooted! (with backup)</string>
-	<string name="delete_backup">Delete su backup</string>
-	<string name="unroot">Temp. un-root (keeps backup)</string>
+    <string name="status_title">Status:</string>
+    <string name="superuser_apk_installed">Superuser app installed</string>
+    <string name="device_rooted">Device rooted</string>
+    <string name="permission_granted">Root permission granted</string>
+    <string name="fs_supported">Filesystem supports root protection</string>
+    <string name="su_protected">Protected su copy available</string>
+    <string name="install_market">Market</string>
+    <string name="protect_root">Protect root</string>
+    <string name="restore_root">Restore root</string>
+    <string name="backup_root">Backup root</string>
+    <string name="toast_su_protected">root su protected</string>
+    <string name="toast_su_backup">root su simple backup completed</string>
+    <string name="toast_su_restore">root su restored</string>
+    <string name="toast_su_delete_backup">root su backup deleted</string>
+    <string name="toast_unroot">Device un-rooted! (with backup)</string>
+    <string name="delete_backup">Delete su backup</string>
+    <string name="unroot">Temp. un-root (keeps backup)</string>
 
 </resources>

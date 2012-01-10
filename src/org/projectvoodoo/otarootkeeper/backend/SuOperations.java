@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 public class SuOperations {
 
-    Context context;
-    Device device;
+    private Context context;
+    private Device device;
 
     private static final String TAG = "Voodoo OTA RootKeeper ProtectedSuOperation";
     public static final String suBackupPath = "/system/su-backup";
