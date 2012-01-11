@@ -78,23 +78,32 @@ public class Device {
 
     private void ensureAttributeUtilsAvailability() {
 
+        String[] symlinks = {
+                "test",
+                "lsattr",
+                "chattr"
+        };
+
         // verify custom busybox presence by test, lsattr and chattr
         // files/symlinks
         try {
-            context.openFileInput("test");
-            context.openFileInput("lsattr");
-            context.openFileInput("chattr");
+            context.openFileInput("busybox");
+            for (String s : symlinks)
+                context.openFileInput(s);
+
         } catch (FileNotFoundException notfoundE) {
             Log.d(TAG, "Extracting tools from assets is required");
 
             try {
-                Utils.copyFromAssets(context, "busybox", "test");
+                Utils.copyFromAssets(context, "busybox", "busybox");
 
                 String filesPath = context.getFilesDir().getAbsolutePath();
+                String script = "chmod 700 " + filesPath + "/busybox\n";
+                for (String s : symlinks) {
+                    script += "rm " + filesPath + "/" + s + "\n";
+                    script += "ln -s busybox " + filesPath + "/" + s + "\n";
+                }
 
-                String script = "chmod 700 " + filesPath + "/test\n";
-                script += "ln -s test " + filesPath + "/lsattr\n";
-                script += "ln -s test " + filesPath + "/chattr\n";
                 Utils.runScript(context, script);
 
             } catch (Exception e) {
