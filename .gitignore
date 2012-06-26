@@ -11,5 +11,7 @@
 # generated GUI files
 *R.java
 
+BuildConfig.java
+
 proguard/
 bin/
