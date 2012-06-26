@@ -3,20 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-
         <TextView
             style="@style/infoText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/introduction" >
         </TextView>
-
         <TextView
             android:id="@+id/textView2"
             style="@style/titleText"
@@ -25,7 +22,6 @@
             android:text="@string/works_with_title"
             android:textAppearance="?android:attr/textAppearanceLarge" >
         </TextView>
-
         <TextView
             android:id="@+id/textView3"
             style="@style/infoText"
@@ -33,7 +29,6 @@
             android:layout_height="wrap_content"
             android:text="@string/works_with" >
         </TextView>
-
         <TextView
             android:id="@+id/textView4"
             style="@style/titleText"
@@ -42,7 +37,6 @@
             android:text="@string/useless_with_title"
             android:textAppearance="?android:attr/textAppearanceLarge" >
         </TextView>
-
         <TextView
             android:id="@+id/textView5"
             style="@style/infoText"
@@ -50,7 +44,6 @@
             android:layout_height="wrap_content"
             android:text="@string/useless_with" >
         </TextView>
-
         <TextView
             android:id="@+id/textView6"
             style="@style/titleText"
@@ -59,19 +52,16 @@
             android:text="@string/status_title"
             android:textAppearance="?android:attr/textAppearanceLarge" >
         </TextView>
-
         <TableLayout
             android:id="@+id/tableLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal" >
-
             <org.projectvoodoo.otarootkeeper.ui.StatusRow
                 android:id="@+id/superuser_app_installed"
                 style="@style/statusRowStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
                 <TextView
                     android:id="@+id/textView7"
                     android:layout_width="wrap_content"
@@ -79,13 +69,11 @@
                     android:text="@string/superuser_apk_installed" >
                 </TextView>
             </org.projectvoodoo.otarootkeeper.ui.StatusRow>
-
             <org.projectvoodoo.otarootkeeper.ui.StatusRow
                 android:id="@+id/rooted"
                 style="@style/statusRowStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
@@ -93,13 +81,11 @@
                     android:text="@string/device_rooted" >
                 </TextView>
             </org.projectvoodoo.otarootkeeper.ui.StatusRow>
-
             <org.projectvoodoo.otarootkeeper.ui.StatusRow
                 android:id="@+id/root_granted"
                 style="@style/statusRowStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
@@ -107,13 +93,11 @@
                     android:text="@string/permission_granted" >
                 </TextView>
             </org.projectvoodoo.otarootkeeper.ui.StatusRow>
-
             <org.projectvoodoo.otarootkeeper.ui.StatusRow
                 android:id="@+id/fs_supported"
                 style="@style/statusRowStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
@@ -121,13 +105,11 @@
                     android:text="@string/fs_supported" >
                 </TextView>
             </org.projectvoodoo.otarootkeeper.ui.StatusRow>
-
             <org.projectvoodoo.otarootkeeper.ui.StatusRow
                 android:id="@+id/su_protected"
                 style="@style/statusRowStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" >
-
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
@@ -136,7 +118,6 @@
                 </TextView>
             </org.projectvoodoo.otarootkeeper.ui.StatusRow>
         </TableLayout>
-
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
@@ -144,7 +125,6 @@
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal|clip_horizontal"
             android:orientation="vertical" >
-
             <Button
                 android:id="@+id/button_backup_root"
                 style="@style/action_button"
@@ -152,7 +132,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/backup_root" >
             </Button>
-
             <Button
                 android:id="@+id/button_restore_root"
                 style="@style/action_button"
@@ -160,7 +139,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/restore_root" >
             </Button>
-
             <Button
                 android:id="@+id/button_delete_backup"
                 style="@style/action_button"
@@ -168,7 +146,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/delete_backup" >
             </Button>
-
             <Button
                 android:id="@+id/button_unroot"
                 style="@style/action_button"
@@ -178,5 +155,4 @@
             </Button>
         </LinearLayout>
     </LinearLayout>
-
 </ScrollView>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Voodoo OTA RootKeeper</string>
     <string name="introduction_title">Introduction:</string>
     <string name="introduction">This app saves a protected copy of \"su\"
@@ -29,5 +28,4 @@
     <string name="toast_unroot">Device un-rooted! (with backup)</string>
     <string name="delete_backup">Delete su backup</string>
     <string name="unroot">Temp. un-root (keeps backup)</string>
-
 </resources>

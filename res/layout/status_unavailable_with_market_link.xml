@@ -4,12 +4,10 @@
     android:layout_height="match_parent"
     android:gravity="right"
     android:orientation="horizontal" >
-
     <Button
         android:id="@+id/button_install"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/install_market" >
     </Button>
-
 </LinearLayout>
