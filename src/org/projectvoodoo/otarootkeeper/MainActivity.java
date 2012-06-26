@@ -76,33 +76,32 @@ public class MainActivity extends Activity implements OnClickListener {
 
         mSuProtectedRow.setAvailable(mDevice.isSuProtected);
 
-        mUnrootButton.setVisibility(View.GONE);
+        mBackupButton.setText(mDevice.mFileSystem == FileSystem.EXTFS ?
+                R.string.protect_root : R.string.backup_root);
 
-        if (mDevice.isRooted && !mDevice.isSuProtected) {
-            if (mDevice.mFileSystem == FileSystem.EXTFS)
-                mBackupButton.setText(R.string.protect_root);
-            else
-                mBackupButton.setText(R.string.backup_root);
+        mBackupButton.setVisibility(
+                mDevice.isRooted
+                        && mDevice.isSuperuserAppInstalled
+                        && !mDevice.isSuProtected ?
+                        View.VISIBLE : View.GONE);
 
-            mRestoreButton.setVisibility(View.GONE);
-            mDeleteBackupButton.setVisibility(View.GONE);
+        mRestoreButton.setVisibility(
+                !mDevice.isRooted
+                        && mDevice.isSuperuserAppInstalled
+                        && mDevice.isSuProtected ?
+                        View.VISIBLE : View.GONE);
 
-        } else if (mDevice.isRooted && mDevice.isSuProtected) {
-            mBackupButton.setVisibility(View.GONE);
-            mRestoreButton.setVisibility(View.GONE);
-            mDeleteBackupButton.setVisibility(View.VISIBLE);
-            mUnrootButton.setVisibility(View.VISIBLE);
+        mDeleteBackupButton.setVisibility(
+                mDevice.isSuProtected
+                        && mDevice.isSuperuserAppInstalled
+                        && mDevice.isRooted ?
+                        View.VISIBLE : View.GONE);
 
-        } else if (!mDevice.isRooted && mDevice.isSuProtected) {
-            mBackupButton.setVisibility(View.GONE);
-            mRestoreButton.setVisibility(View.VISIBLE);
-            mDeleteBackupButton.setVisibility(View.GONE);
-        } else {
-            mBackupButton.setVisibility(View.GONE);
-            mRestoreButton.setVisibility(View.GONE);
-            mDeleteBackupButton.setVisibility(View.GONE);
-        }
-
+        mUnrootButton.setVisibility(
+                mDevice.isSuProtected
+                        && mDevice.isSuperuserAppInstalled
+                        && mDevice.isRooted ?
+                        View.VISIBLE : View.GONE);
     }
 
     @Override
