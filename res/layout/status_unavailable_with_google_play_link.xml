@@ -8,6 +8,6 @@
         android:id="@+id/button_install"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/install_market" >
+        android:text="@string/install_google_play" >
     </Button>
 </LinearLayout>

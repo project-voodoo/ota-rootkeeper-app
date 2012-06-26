@@ -17,7 +17,7 @@
     <string name="permission_granted">Root permission granted</string>
     <string name="fs_supported">Filesystem supports root protection</string>
     <string name="su_protected">Protected su copy available</string>
-    <string name="install_market">Market</string>
+    <string name="install_google_play">Google Play</string>
     <string name="protect_root">Protect root</string>
     <string name="restore_root">Restore root</string>
     <string name="backup_root">Backup root</string>

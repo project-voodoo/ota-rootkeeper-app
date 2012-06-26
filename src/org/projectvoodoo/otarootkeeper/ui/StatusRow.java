@@ -39,17 +39,17 @@ public class StatusRow extends TableRow implements OnClickListener {
         addView(mView);
     }
 
-    public void setAvailable(Boolean availability, String marketLink) {
+    public void setAvailable(Boolean availability, String googlePlayUrl) {
 
         if (mView != null)
             removeView(mView);
 
         if (!availability) {
-            mView = inflate(context, R.layout.status_unavailable_with_market_link, null);
+            mView = inflate(context, R.layout.status_unavailable_with_google_play_link, null);
 
             Button installButton = (Button) mView.findViewById(id.button_install);
             installButton.setOnClickListener(this);
-            installButton.setTag(marketLink);
+            installButton.setTag(googlePlayUrl);
             setCustomPadding();
             addView(mView);
         }
