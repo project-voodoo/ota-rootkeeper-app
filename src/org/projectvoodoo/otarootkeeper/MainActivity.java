@@ -97,6 +97,10 @@ public class MainActivity extends Activity implements OnClickListener {
             mBackupButton.setVisibility(View.GONE);
             mRestoreButton.setVisibility(View.VISIBLE);
             mDeleteBackupButton.setVisibility(View.GONE);
+        } else {
+            mBackupButton.setVisibility(View.GONE);
+            mRestoreButton.setVisibility(View.GONE);
+            mDeleteBackupButton.setVisibility(View.GONE);
         }
 
     }
