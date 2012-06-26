@@ -3,7 +3,7 @@ package org.projectvoodoo.otarootkeeper;
 
 import org.projectvoodoo.otarootkeeper.R.id;
 import org.projectvoodoo.otarootkeeper.backend.Device;
-import org.projectvoodoo.otarootkeeper.backend.Device.FileSystems;
+import org.projectvoodoo.otarootkeeper.backend.Device.FileSystem;
 import org.projectvoodoo.otarootkeeper.backend.Utils;
 import org.projectvoodoo.otarootkeeper.ui.StatusRow;
 
@@ -21,90 +21,90 @@ public class MainActivity extends Activity implements OnClickListener {
 
     private static final String TAG = "Voodoo OTA RootKeeper MainActivity";
 
-    private Device device;
+    private Device mDevice;
 
-    private StatusRow superuserdRow;
-    private StatusRow rootedRow;
-    private StatusRow rootGrantedRow;
-    private StatusRow fsSupportedRow;
-    private StatusRow suProtectedRow;
-    private Button protectButton;
-    private Button backupButton;
-    private Button restoreButton;
-    private Button deleteBackupButton;
-    private Button unrootButton;
+    private StatusRow mSuperuserRow;
+    private StatusRow mRootedRow;
+    private StatusRow mRootGrantedRow;
+    private StatusRow mFsSupportedRow;
+    private StatusRow mSuProtectedRow;
+    private Button mProtectButton;
+    private Button mBackupButton;
+    private Button mRestoreButton;
+    private Button mDeleteBackupButton;
+    private Button mUnrootButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Starting app");
-        device = new Device(this);
+        mDevice = new Device(this);
 
         setContentView(R.layout.main);
 
-        superuserdRow = (StatusRow) findViewById(id.superuser_app_installed);
-        rootedRow = (StatusRow) findViewById(id.rooted);
-        rootGrantedRow = (StatusRow) findViewById(id.root_granted);
-        fsSupportedRow = (StatusRow) findViewById(id.fs_supported);
-        suProtectedRow = (StatusRow) findViewById(id.su_protected);
-        protectButton = (Button) findViewById(id.button_protect_root);
-        protectButton.setOnClickListener(this);
-        backupButton = (Button) findViewById(id.button_backup_root);
-        backupButton.setOnClickListener(this);
-        restoreButton = (Button) findViewById(id.button_restore_root);
-        restoreButton.setOnClickListener(this);
-        deleteBackupButton = (Button) findViewById(id.button_delete_backup);
-        deleteBackupButton.setOnClickListener(this);
-        unrootButton = (Button) findViewById(id.button_unroot);
-        unrootButton.setOnClickListener(this);
+        mSuperuserRow = (StatusRow) findViewById(id.superuser_app_installed);
+        mRootedRow = (StatusRow) findViewById(id.rooted);
+        mRootGrantedRow = (StatusRow) findViewById(id.root_granted);
+        mFsSupportedRow = (StatusRow) findViewById(id.fs_supported);
+        mSuProtectedRow = (StatusRow) findViewById(id.su_protected);
+        mProtectButton = (Button) findViewById(id.button_protect_root);
+        mProtectButton.setOnClickListener(this);
+        mBackupButton = (Button) findViewById(id.button_backup_root);
+        mBackupButton.setOnClickListener(this);
+        mRestoreButton = (Button) findViewById(id.button_restore_root);
+        mRestoreButton.setOnClickListener(this);
+        mDeleteBackupButton = (Button) findViewById(id.button_delete_backup);
+        mDeleteBackupButton.setOnClickListener(this);
+        mUnrootButton = (Button) findViewById(id.button_unroot);
+        mUnrootButton.setOnClickListener(this);
 
-        displayStatus();
+        showStatus();
     }
 
-    private void displayStatus() {
-        if (device.isSuperuserAppInstalled)
-            superuserdRow.setAvailable(true);
+    private void showStatus() {
+        if (mDevice.isSuperuserAppInstalled)
+            mSuperuserRow.setAvailable(true);
         else
-            superuserdRow.setAvailable(false, "market://details?id=com.noshufou.android.su");
+            mSuperuserRow.setAvailable(false, "market://details?id=com.noshufou.android.su");
 
-        rootedRow.setAvailable(device.isRooted);
+        mRootedRow.setAvailable(mDevice.isRooted);
 
-        rootGrantedRow.setAvailable(Utils.canGainSu(this));
+        mRootGrantedRow.setAvailable(Utils.canGainSu(this));
 
-        if (device.fs == FileSystems.EXTFS)
-            fsSupportedRow.setAvailable(true);
+        if (mDevice.mFileSystem == FileSystem.EXTFS)
+            mFsSupportedRow.setAvailable(true);
         else
-            fsSupportedRow.setAvailable(false);
+            mFsSupportedRow.setAvailable(false);
 
-        suProtectedRow.setAvailable(device.isSuProtected);
+        mSuProtectedRow.setAvailable(mDevice.isSuProtected);
 
-        unrootButton.setVisibility(View.GONE);
+        mUnrootButton.setVisibility(View.GONE);
 
-        if (device.isRooted && !device.isSuProtected) {
-            if (device.fs == FileSystems.EXTFS) {
-                protectButton.setVisibility(View.VISIBLE);
-                backupButton.setVisibility(View.GONE);
+        if (mDevice.isRooted && !mDevice.isSuProtected) {
+            if (mDevice.mFileSystem == FileSystem.EXTFS) {
+                mProtectButton.setVisibility(View.VISIBLE);
+                mBackupButton.setVisibility(View.GONE);
 
             } else {
-                protectButton.setVisibility(View.GONE);
-                backupButton.setVisibility(View.VISIBLE);
+                mProtectButton.setVisibility(View.GONE);
+                mBackupButton.setVisibility(View.VISIBLE);
             }
-            restoreButton.setVisibility(View.GONE);
-            deleteBackupButton.setVisibility(View.GONE);
+            mRestoreButton.setVisibility(View.GONE);
+            mDeleteBackupButton.setVisibility(View.GONE);
 
-        } else if (device.isRooted && device.isSuProtected) {
-            protectButton.setVisibility(View.GONE);
-            backupButton.setVisibility(View.GONE);
-            restoreButton.setVisibility(View.GONE);
-            deleteBackupButton.setVisibility(View.VISIBLE);
-            unrootButton.setVisibility(View.VISIBLE);
+        } else if (mDevice.isRooted && mDevice.isSuProtected) {
+            mProtectButton.setVisibility(View.GONE);
+            mBackupButton.setVisibility(View.GONE);
+            mRestoreButton.setVisibility(View.GONE);
+            mDeleteBackupButton.setVisibility(View.VISIBLE);
+            mUnrootButton.setVisibility(View.VISIBLE);
 
-        } else if (!device.isRooted && device.isSuProtected) {
-            protectButton.setVisibility(View.GONE);
-            backupButton.setVisibility(View.GONE);
-            restoreButton.setVisibility(View.VISIBLE);
-            deleteBackupButton.setVisibility(View.GONE);
+        } else if (!mDevice.isRooted && mDevice.isSuProtected) {
+            mProtectButton.setVisibility(View.GONE);
+            mBackupButton.setVisibility(View.GONE);
+            mRestoreButton.setVisibility(View.VISIBLE);
+            mDeleteBackupButton.setVisibility(View.GONE);
         }
 
     }
@@ -121,8 +121,8 @@ public class MainActivity extends Activity implements OnClickListener {
         // Handle item selection
         switch (item.getItemId()) {
             case id.refresh:
-                device.analyzeSu();
-                displayStatus();
+                mDevice.analyzeSu();
+                showStatus();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -137,21 +137,21 @@ public class MainActivity extends Activity implements OnClickListener {
         Log.d(TAG, "Button pressed tag: " + tag);
 
         if (tag.equals("protect") || tag.equals("backup")) {
-            device.suOperations.backup();
+            mDevice.mSuOps.backup();
 
         } else if (tag.equals("restore")) {
-            device.suOperations.restore();
+            mDevice.mSuOps.restore();
 
         } else if (tag.equals("delete_backup")) {
-            device.suOperations.deleteBackup();
+            mDevice.mSuOps.deleteBackup();
 
         } else if (tag.equals("unroot")) {
-            device.suOperations.unroot();
+            mDevice.mSuOps.unroot();
 
         }
 
-        device.analyzeSu();
-        displayStatus();
+        mDevice.analyzeSu();
+        showStatus();
 
     }
 }

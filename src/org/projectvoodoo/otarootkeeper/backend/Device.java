@@ -15,29 +15,29 @@ public class Device {
 
     private static final String TAG = "Voodoo OTA RootKeeper Device";
 
-    private Context context;
-    public SuOperations suOperations;
+    private Context mContext;
+    public SuOperations mSuOps;
 
     public Boolean isRooted = false;
     public Boolean isSuperuserAppInstalled = false;
     public Boolean isSuProtected = false;
 
-    public enum FileSystems {
+    public enum FileSystem {
         EXTFS,
         UNSUPPORTED
     }
 
-    public FileSystems fs = FileSystems.UNSUPPORTED;
+    public FileSystem mFileSystem = FileSystem.UNSUPPORTED;
 
     public Device(Context context) {
-        this.context = context;
+        mContext = context;
 
         ensureAttributeUtilsAvailability();
         detectSystemFs();
 
         analyzeSu();
 
-        suOperations = new SuOperations(context, this);
+        mSuOps = new SuOperations(context, this);
     }
 
     private void detectSystemFs() {
@@ -59,7 +59,7 @@ public class Device {
                             || parsedFs.equals("ext3")
                             || parsedFs.equals("ext4")) {
                         Log.i(TAG, "/system filesystem support extended attributes");
-                        fs = FileSystems.EXTFS;
+                        mFileSystem = FileSystem.EXTFS;
                         return;
                     }
                 }
@@ -72,7 +72,7 @@ public class Device {
         }
 
         Log.i(TAG, "/system filesystem doesn't support extended attributes");
-        fs = FileSystems.UNSUPPORTED;
+        mFileSystem = FileSystem.UNSUPPORTED;
 
     }
 
@@ -87,24 +87,24 @@ public class Device {
         // verify custom busybox presence by test, lsattr and chattr
         // files/symlinks
         try {
-            context.openFileInput("busybox");
+            mContext.openFileInput("busybox");
             for (String s : symlinks)
-                context.openFileInput(s);
+                mContext.openFileInput(s);
 
         } catch (FileNotFoundException notfoundE) {
             Log.d(TAG, "Extracting tools from assets is required");
 
             try {
-                Utils.copyFromAssets(context, "busybox", "busybox");
+                Utils.copyFromAssets(mContext, "busybox", "busybox");
 
-                String filesPath = context.getFilesDir().getAbsolutePath();
+                String filesPath = mContext.getFilesDir().getAbsolutePath();
                 String script = "chmod 700 " + filesPath + "/busybox\n";
                 for (String s : symlinks) {
                     script += "rm " + filesPath + "/" + s + "\n";
                     script += "ln -s busybox " + filesPath + "/" + s + "\n";
                 }
 
-                Utils.runScript(context, script);
+                Utils.runScript(mContext, script);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -120,18 +120,18 @@ public class Device {
 
     private Boolean isSuProtected() {
 
-        switch (fs) {
+        switch (mFileSystem) {
             case EXTFS:
                 try {
-                    String lsattr = context.getFilesDir().getAbsolutePath() + "/lsattr";
+                    String lsattr = mContext.getFilesDir().getAbsolutePath() + "/lsattr";
                     String attrs = Utils.getCommandOutput(lsattr + " "
-                            + SuOperations.suBackupPath).trim();
+                            + SuOperations.SU_BACKUP_PATH).trim();
                     Log.d(TAG, "attributes: " + attrs);
 
-                    String filename = SuOperations.suBackupPath.split("/")[2];
+                    String filename = SuOperations.SU_BACKUP_PATH.split("/")[2];
 
                     if (attrs.matches(".*-i-.*\\/" + filename)) {
-                        if (Utils.isSuid(context, SuOperations.suBackupPath)) {
+                        if (Utils.isSuid(mContext, SuOperations.SU_BACKUP_PATH)) {
                             Log.i(TAG, "su binary is already protected");
                             return true;
                         }
@@ -143,7 +143,7 @@ public class Device {
                 break;
 
             case UNSUPPORTED:
-                return Utils.isSuid(context, SuOperations.suBackupPath);
+                return Utils.isSuid(mContext, SuOperations.SU_BACKUP_PATH);
 
         }
         return false;
@@ -158,7 +158,7 @@ public class Device {
             File suBinary = new File(path + "/su");
 
             if (suBinary.exists()) {
-                if (Utils.isSuid(context, suBinary.getAbsolutePath())) {
+                if (Utils.isSuid(mContext, suBinary.getAbsolutePath())) {
                     Log.d(TAG, "Found adequate su binary at " + suBinary.getAbsolutePath());
                     return true;
                 }
@@ -169,7 +169,7 @@ public class Device {
 
     private Boolean isSuperUserApkinstalled() {
         try {
-            context.getPackageManager().getPackageInfo("com.noshufou.android.su", 0);
+            mContext.getPackageManager().getPackageInfo("com.noshufou.android.su", 0);
             Log.d(TAG, "Superuser.apk installed");
             return true;
         } catch (NameNotFoundException e) {
