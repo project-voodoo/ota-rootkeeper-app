@@ -4,7 +4,7 @@
     <string name="introduction_title">Introduction:</string>
     <string name="introduction">This app saves a protected copy of \"su\"
 		for devices already rooted.\nIf you loose root permissions after an
-		OTA update, RootKeeper can restore it.</string>
+		OTA update, RootKeeper might be able to restore it.</string>
     <string name="works_with_title">Works with:</string>
     <string name="works_with">Any device using Ext3 or Ext4 filesystem and Google
 		style incremental OTA update.zip</string>
