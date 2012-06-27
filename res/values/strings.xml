@@ -28,4 +28,8 @@
     <string name="toast_unroot">Device un-rooted! (with backup)</string>
     <string name="delete_backup">Delete su backup</string>
     <string name="unroot">Temp. un-root (keeps backup)</string>
+    <string name="author">Author:</string>
+    <string name="credits">Application by François Simond aka supercurio
+        \nFollow on Twitter: https://twitter.com/supercurio
+        \nMore apps: https://play.google.com/store/apps/developer?id=supercurio+-+Project+Voodoo</string>
 </resources>

@@ -12,8 +12,7 @@
             style="@style/infoText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/introduction" >
-        </TextView>
+            android:text="@string/introduction" />
         <TextView
             android:id="@+id/textView2"
             style="@style/titleText"
@@ -154,5 +153,18 @@
                 android:text="@string/unroot" >
             </Button>
         </LinearLayout>
+        <TextView
+            android:id="@+id/TextView01"
+            style="@style/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/author"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            style="@style/infoText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:text="@string/credits" />
     </LinearLayout>
 </ScrollView>
