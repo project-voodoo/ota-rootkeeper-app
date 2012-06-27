@@ -81,15 +81,17 @@ public class Utils {
 
             for (String command : commands) {
                 Log.i(TAG, "command: " + command);
-                shellInput.write((command + "\n").getBytes());
+                shellInput.write((command + " 2>&1\n").getBytes());
             }
 
             shellInput.write("exit\n".getBytes());
             shellInput.flush();
 
             String line;
-            while ((line = shellOutput.readLine()) != null)
+            while ((line = shellOutput.readLine()) != null) {
+                Log.d(TAG, "command output: " + line);
                 output.add(line);
+            }
 
             process.waitFor();
         } catch (IOException e) {

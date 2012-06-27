@@ -3,7 +3,7 @@ package org.projectvoodoo.otarootkeeper.backend;
 
 import java.util.ArrayList;
 
-import org.projectvoodoo.otarootkeeper.R.string;
+import org.projectvoodoo.otarootkeeper.R;
 import org.projectvoodoo.otarootkeeper.backend.Device.FileSystem;
 
 import android.content.Context;
@@ -17,7 +17,8 @@ public class SuOperations {
 
     private static final String TAG = "Voodoo OTA RootKeeper ProtectedSuOperation";
     public static final String SU_PATH = "/system/bin/su";
-    public static final String SU_BACKUP_DIR = "/system/usr/we-need-root";
+    public static final String SU_BACKUP_BASE_DIR = "/system/usr";
+    public static final String SU_BACKUP_DIR = SU_BACKUP_BASE_DIR + "/we-need-root";
     public static final String SU_BACKUP_FILENAME = "su-backup";
     public static final String SU_BACKUP_PATH = SU_BACKUP_DIR + "/" + SU_BACKUP_FILENAME;
     public static final String SU_BACKUP_PATH_OLD = "/system/" + SU_BACKUP_FILENAME;
@@ -46,7 +47,8 @@ public class SuOperations {
         if (Utils.isSuid(mContext, SU_PATH))
             suSource = SU_PATH;
 
-        commands.add("mkdir -p " + SU_BACKUP_DIR);
+        commands.add("mkdir " + SU_BACKUP_BASE_DIR);
+        commands.add("mkdir " + SU_BACKUP_DIR);
         commands.add("chmod 001 " + SU_BACKUP_DIR);
         commands.add("cat " + suSource + " > " + SU_BACKUP_PATH);
         commands.add("chmod 06755 " + SU_BACKUP_PATH);
@@ -60,11 +62,11 @@ public class SuOperations {
 
         Utils.run("su", commands);
 
-        String toastText;
+        int toastText;
         if (mDevice.mFileSystem == FileSystem.EXTFS)
-            toastText = mContext.getString(string.toast_su_protected);
+            toastText = R.string.toast_su_protected;
         else
-            toastText = mContext.getString(string.toast_su_backup);
+            toastText = R.string.toast_su_backup;
 
         Toast.makeText(mContext, toastText, Toast.LENGTH_LONG).show();
     }
@@ -86,8 +88,7 @@ public class SuOperations {
         Utils.run(mDevice.validSuPath, commands);
         upgradeSuBackup();
 
-        Toast.makeText(mContext, mContext.getString(string.toast_su_restore),
-                Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, R.string.toast_su_restore, Toast.LENGTH_LONG).show();
     }
 
     public final void deleteBackup() {
@@ -108,15 +109,18 @@ public class SuOperations {
 
         Utils.run("su", commands);
 
-        Toast.makeText(mContext, mContext.getString(string.toast_su_delete_backup),
-                Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, R.string.toast_su_delete_backup, Toast.LENGTH_LONG).show();
     }
 
-    public final void unroot() {
+    public final void unRoot() {
 
         Log.i(TAG, "Unroot device but keep su backup");
 
         upgradeSuBackup();
+        if (!mDevice.isSuProtected) {
+            Toast.makeText(mContext, R.string.toast_su_protection_error, Toast.LENGTH_LONG).show();
+            return;
+        }
 
         String[] commands = new String[] {
                 CMD_REMOUNT_RW,
@@ -126,7 +130,7 @@ public class SuOperations {
 
         Utils.run("su", commands);
 
-        Toast.makeText(mContext, mContext.getString(string.toast_unroot), Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, R.string.toast_unroot, Toast.LENGTH_LONG).show();
     }
 
     private void upgradeSuBackup() {

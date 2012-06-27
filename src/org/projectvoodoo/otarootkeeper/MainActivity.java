@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements OnClickListener {
         mDevice = new Device(this);
 
         setContentView(R.layout.main);
+        setTitle(getString(R.string.app_name) + " v" + getVersionName());
 
         mSuperuserRow = (StatusRow) findViewById(id.superuser_app_installed);
         mRootedRow = (StatusRow) findViewById(id.rooted);
@@ -142,7 +143,7 @@ public class MainActivity extends Activity implements OnClickListener {
                 break;
 
             case R.id.button_unroot:
-                mDevice.mSuOps.unroot();
+                mDevice.mSuOps.unRoot();
                 break;
 
             default:
@@ -151,5 +152,13 @@ public class MainActivity extends Activity implements OnClickListener {
 
         mDevice.analyzeSu();
         showStatus();
+    }
+
+    private String getVersionName() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (Exception e) {
+        }
+        return null;
     }
 }
