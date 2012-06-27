@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.projectvoodoo.otarootkeeper"
     android:installLocation="auto"
-    android:versionCode="6"
-    android:versionName="1.2" >
+    android:versionCode="7"
+    android:versionName="2.0" >
     <uses-sdk
         android:minSdkVersion="3"
         android:targetSdkVersion="15" />
@@ -18,7 +18,8 @@
     <application
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name" android:theme="@android:style/Theme.Holo">
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo" >
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation"
