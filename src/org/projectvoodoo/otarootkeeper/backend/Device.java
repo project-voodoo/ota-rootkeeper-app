@@ -5,7 +5,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -21,6 +22,9 @@ public class Device {
     public Boolean isRooted = false;
     public Boolean isSuperuserAppInstalled = false;
     public Boolean isSuProtected = false;
+
+    public String validSuPath = SuOperations.SU_BACKUP_PATH;
+    public boolean needSuBackupUpgrade = false;
 
     public enum FileSystem {
         EXTFS,
@@ -41,7 +45,6 @@ public class Device {
     }
 
     private void detectSystemFs() {
-
         // detect an ExtFS filesystem
 
         try {
@@ -104,7 +107,7 @@ public class Device {
                     script += "ln -s busybox " + filesPath + "/" + s + "\n";
                 }
 
-                Utils.runScript(mContext, script);
+                Utils.run(script);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -120,32 +123,41 @@ public class Device {
 
     private Boolean isSuProtected() {
 
-        switch (mFileSystem) {
-            case EXTFS:
-                try {
+        HashMap<String, Boolean> paths = new HashMap<String, Boolean>();
+        paths.put(SuOperations.SU_BACKUP_PATH, false);
+        paths.put(SuOperations.SU_BACKUP_PATH_OLD, true);
+
+        for (String path : paths.keySet())
+            switch (mFileSystem) {
+                case EXTFS:
                     String lsattr = mContext.getFilesDir().getAbsolutePath() + "/lsattr";
-                    String attrs = Utils.getCommandOutput(lsattr + " "
-                            + SuOperations.SU_BACKUP_PATH).trim();
-                    Log.d(TAG, "attributes: " + attrs);
 
-                    String filename = SuOperations.SU_BACKUP_PATH.split("/")[2];
+                    ArrayList<String> output = Utils.run(lsattr + " " + path);
 
-                    if (attrs.matches(".*-i-.*\\/" + filename)) {
-                        if (Utils.isSuid(mContext, SuOperations.SU_BACKUP_PATH)) {
-                            Log.i(TAG, "su binary is already protected");
-                            return true;
+                    if (output.size() == 1) {
+                        String attrs = output.get(0);
+                        Log.d(TAG, "attributes: " + attrs);
+
+                        if (attrs.matches(".*-i-.*" + SuOperations.SU_BACKUP_FILENAME)) {
+                            if (Utils.isSuid(mContext, path)) {
+                                Log.i(TAG, "su binary is already protected");
+                                validSuPath = path;
+                                needSuBackupUpgrade = paths.get(path);
+                                return true;
+                            }
                         }
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
-                break;
+                    break;
 
-            case UNSUPPORTED:
-                return Utils.isSuid(mContext, SuOperations.SU_BACKUP_PATH);
+                case UNSUPPORTED:
+                    if (Utils.isSuid(mContext, SuOperations.SU_BACKUP_PATH)) {
+                        validSuPath = path;
+                        needSuBackupUpgrade = paths.get(path);
+                        return true;
+                    }
 
-        }
+            }
         return false;
     }
 

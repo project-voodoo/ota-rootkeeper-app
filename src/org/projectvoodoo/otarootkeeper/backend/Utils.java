@@ -1,11 +1,13 @@
 
 package org.projectvoodoo.otarootkeeper.backend;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,7 +15,6 @@ import android.util.Log;
 public class Utils {
 
     private static final String TAG = "Voodoo Utils";
-    private static final String scriptFileName = "commands.sh";
 
     public static final void copyFromAssets(Context context, String source, String destination)
             throws IOException {
@@ -33,49 +34,6 @@ public class Utils {
         Log.d(TAG, source + " asset copied to " + destination);
     }
 
-    public static final String runScript(Context context, String content) {
-        return runScript(context, content, "/system/bin/sh");
-    }
-
-    public static final String runScript(Context context, String content, String shell) {
-
-        Log.d(TAG, "Run script content (with shell: " + shell + "):\n" + content);
-
-        StringBuilder output = new StringBuilder();
-
-        try {
-
-            // write script content
-            FileOutputStream fos = context.openFileOutput(scriptFileName, Context.MODE_PRIVATE);
-            fos.write(content.getBytes());
-            fos.close();
-
-            // set script file permission
-            Process p = Runtime.getRuntime().exec(
-                            "chmod 700 " + context.getFileStreamPath(scriptFileName));
-            p.waitFor();
-
-            // now execute the script
-            String command = context.getFileStreamPath(scriptFileName).getAbsolutePath();
-            command = shell + " -c " + command;
-            p = Runtime.getRuntime().exec(command);
-            p.waitFor();
-
-            BufferedReader in =
-                    new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                output.append(line);
-                output.append("\n");
-            }
-
-        } catch (Exception e) {
-            Log.d(TAG, "unable to run script: " + scriptFileName);
-            e.printStackTrace();
-        }
-        return output.toString();
-    }
-
     public static final Boolean isSuid(Context context, String filename) {
 
         try {
@@ -92,6 +50,55 @@ public class Utils {
         Log.d(TAG, filename + " is not set-user-ID");
         return false;
 
+    }
+
+    public static ArrayList<String> run(String command) {
+        return run("/system/bin/sh", command);
+    }
+
+    public static ArrayList<String> run(String shell, String command) {
+        return run(shell, new String[] {
+                command
+        });
+    }
+
+    public static ArrayList<String> run(String shell, ArrayList<String> commands) {
+        String[] commandsArray = new String[commands.size()];
+        commands.toArray(commandsArray);
+        return run(shell, commandsArray);
+    }
+
+    public static ArrayList<String> run(String shell, String[] commands) {
+        ArrayList<String> output = new ArrayList<String>();
+
+        try {
+            Process process = Runtime.getRuntime().exec(shell);
+
+            BufferedOutputStream shellInput =
+                    new BufferedOutputStream(process.getOutputStream());
+            BufferedReader shellOutput =
+                    new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            for (String command : commands) {
+                Log.i(TAG, "command: " + command);
+                shellInput.write((command + "\n").getBytes());
+            }
+
+            shellInput.write("exit\n".getBytes());
+            shellInput.flush();
+
+            String line;
+            while ((line = shellOutput.readLine()) != null)
+                output.add(line);
+
+            process.waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return output;
     }
 
     public static final String getCommandOutput(String command) throws IOException {
@@ -118,11 +125,9 @@ public class Utils {
         String suTestScript = "#!/system/bin/sh\necho ";
         String suTestScriptValid = "SuPermsOkay";
 
-        String output = runScript(context,
-                suTestScript + suTestScriptValid,
-                "su");
+        ArrayList<String> output = run("su", suTestScript + suTestScriptValid);
 
-        if (output.trim().equals(suTestScriptValid)) {
+        if (output.size() == 1 && output.get(0).trim().equals(suTestScriptValid)) {
             Log.d(TAG, "Superuser command auth confirmed");
             return true;
 
