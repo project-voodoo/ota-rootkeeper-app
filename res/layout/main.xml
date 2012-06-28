@@ -7,7 +7,8 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="8dp" >
         <TextView
             style="@style/infoText"
             android:layout_width="fill_parent"
@@ -127,38 +128,48 @@
             <Button
                 android:id="@+id/button_backup_root"
                 style="@style/action_button"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="@string/backup_root" >
             </Button>
             <Button
                 android:id="@+id/button_restore_root"
                 style="@style/action_button"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="@string/restore_root" >
             </Button>
             <Button
                 android:id="@+id/button_delete_backup"
                 style="@style/action_button"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="@string/delete_backup" >
             </Button>
             <Button
                 android:id="@+id/button_unroot"
                 style="@style/action_button"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="@string/unroot" >
             </Button>
         </LinearLayout>
         <TextView
-            android:id="@+id/TextView01"
             style="@style/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/author"
+            android:text="@string/notes_title"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            style="@style/infoText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notes" />
+        <TextView
+            style="@style/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/author_title"
             android:textAppearance="?android:attr/textAppearanceLarge" />
         <TextView
             style="@style/infoText"
@@ -166,5 +177,5 @@
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:text="@string/credits" />
-    </LinearLayout>
+        </LinearLayout>
 </ScrollView>

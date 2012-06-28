@@ -56,7 +56,7 @@ public class StatusRow extends TableRow implements OnClickListener {
     }
 
     private void setCustomPadding() {
-        mView.setPadding(15, 0, 0, 0);
+        mView.setPadding(8, 0, 0, 0);
     }
 
     @Override

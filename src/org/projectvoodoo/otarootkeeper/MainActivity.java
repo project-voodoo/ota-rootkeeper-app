@@ -8,6 +8,7 @@ import org.projectvoodoo.otarootkeeper.backend.Utils;
 import org.projectvoodoo.otarootkeeper.ui.StatusRow;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -33,12 +34,13 @@ public class MainActivity extends Activity implements OnClickListener {
     private Button mDeleteBackupButton;
     private Button mUnrootButton;
 
+    private boolean canGainSu;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "Starting app");
-        mDevice = new Device(this);
 
         setContentView(R.layout.main);
         setTitle(getString(R.string.app_name) + " v" + getVersionName());
@@ -57,7 +59,12 @@ public class MainActivity extends Activity implements OnClickListener {
         mUnrootButton = (Button) findViewById(id.button_unroot);
         mUnrootButton.setOnClickListener(this);
 
-        showStatus();
+        mBackupButton.setVisibility(View.GONE);
+        mRestoreButton.setVisibility(View.GONE);
+        mDeleteBackupButton.setVisibility(View.GONE);
+        mUnrootButton.setVisibility(View.GONE);
+
+        new UiSetup().execute();
     }
 
     private void showStatus() {
@@ -68,7 +75,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         mRootedRow.setAvailable(mDevice.isRooted);
 
-        mRootGrantedRow.setAvailable(Utils.canGainSu(this));
+        mRootGrantedRow.setAvailable(canGainSu);
 
         if (mDevice.mFileSystem == FileSystem.EXTFS)
             mFsSupportedRow.setAvailable(true);
@@ -82,25 +89,21 @@ public class MainActivity extends Activity implements OnClickListener {
 
         mBackupButton.setVisibility(
                 mDevice.isRooted
-                        && mDevice.isSuperuserAppInstalled
                         && !mDevice.isSuProtected ?
                         View.VISIBLE : View.GONE);
 
         mRestoreButton.setVisibility(
                 !mDevice.isRooted
-                        && mDevice.isSuperuserAppInstalled
                         && mDevice.isSuProtected ?
                         View.VISIBLE : View.GONE);
 
         mDeleteBackupButton.setVisibility(
                 mDevice.isSuProtected
-                        && mDevice.isSuperuserAppInstalled
                         && mDevice.isRooted ?
                         View.VISIBLE : View.GONE);
 
         mUnrootButton.setVisibility(
                 mDevice.isSuProtected
-                        && mDevice.isSuperuserAppInstalled
                         && mDevice.isRooted ?
                         View.VISIBLE : View.GONE);
     }
@@ -160,5 +163,21 @@ public class MainActivity extends Activity implements OnClickListener {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    class UiSetup extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            mDevice = new Device(getApplicationContext());
+            canGainSu = Utils.canGainSu(getApplicationContext());
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            showStatus();
+            super.onPostExecute(result);
+        }
     }
 }
