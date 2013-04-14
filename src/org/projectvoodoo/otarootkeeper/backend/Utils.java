@@ -1,6 +1,9 @@
 
 package org.projectvoodoo.otarootkeeper.backend;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -8,9 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import android.content.Context;
-import android.util.Log;
 
 public class Utils {
 

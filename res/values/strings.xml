@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Voodoo OTA RootKeeper</string>
     <string name="introduction_title">Introduction:</string>
     <string name="introduction">This app saves a protected copy of \"su\"
@@ -39,4 +40,5 @@
         \nFollow on Twitter:\nhttps://twitter.com/supercurio
         \n\nMore apps:\nhttps://play.google.com/store/apps/developer?id=supercurio+-+Project+Voodoo
         \n\nXDA discussion thread for community help and support\nhttp://forum.xda-developers.com/showthread.php?t=1241517</string>
+
 </resources>

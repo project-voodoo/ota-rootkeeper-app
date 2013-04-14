@@ -1,16 +1,16 @@
 
 package org.projectvoodoo.otarootkeeper.backend;
 
+import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import android.content.Context;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.util.Log;
 
 public class Device {
 

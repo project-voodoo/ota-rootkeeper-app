@@ -1,14 +1,14 @@
 
 package org.projectvoodoo.otarootkeeper.backend;
 
-import java.util.ArrayList;
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.projectvoodoo.otarootkeeper.R;
 import org.projectvoodoo.otarootkeeper.backend.Device.FileSystem;
 
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
+import java.util.ArrayList;
 
 public class SuOperations {
 

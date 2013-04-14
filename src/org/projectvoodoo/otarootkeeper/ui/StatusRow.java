@@ -1,9 +1,6 @@
 
 package org.projectvoodoo.otarootkeeper.ui;
 
-import org.projectvoodoo.otarootkeeper.R.id;
-import org.projectvoodoo.otarootkeeper.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +9,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TableRow;
+
+import org.projectvoodoo.otarootkeeper.R;
+import org.projectvoodoo.otarootkeeper.R.id;
 
 public class StatusRow extends TableRow implements OnClickListener {
 

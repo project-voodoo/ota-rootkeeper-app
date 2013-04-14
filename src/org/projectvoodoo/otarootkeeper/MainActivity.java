@@ -1,12 +1,6 @@
 
 package org.projectvoodoo.otarootkeeper;
 
-import org.projectvoodoo.otarootkeeper.R.id;
-import org.projectvoodoo.otarootkeeper.backend.Device;
-import org.projectvoodoo.otarootkeeper.backend.Device.FileSystem;
-import org.projectvoodoo.otarootkeeper.backend.Utils;
-import org.projectvoodoo.otarootkeeper.ui.StatusRow;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import org.projectvoodoo.otarootkeeper.R.id;
+import org.projectvoodoo.otarootkeeper.backend.Device;
+import org.projectvoodoo.otarootkeeper.backend.Device.FileSystem;
+import org.projectvoodoo.otarootkeeper.backend.Utils;
+import org.projectvoodoo.otarootkeeper.ui.StatusRow;
 
 public class MainActivity extends Activity implements OnClickListener {
 
