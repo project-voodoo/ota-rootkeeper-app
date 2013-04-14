@@ -63,6 +63,7 @@ public class Device {
                             || parsedFs.equals("ext4")) {
                         Log.i(TAG, "/system filesystem support extended attributes");
                         mFileSystem = FileSystem.EXTFS;
+                        in.close();
                         return;
                     }
                 }
